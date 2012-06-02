@@ -1,0 +1,44 @@
+;; Character encoding
+(set-language-environment "UTF-8")
+
+;; No menubar
+(menu-bar-mode -1)
+
+;; Column & line number
+(column-number-mode t)
+(line-number-mode t)
+
+;; Colors
+(global-font-lock-mode t)
+
+;; Show paren
+(require 'paren)
+(show-paren-mode)
+
+;; Indent style
+(setq c-default-style "bsd")
+(setq require-final-newline t)
+(setq-default c-basic-offset 4
+			  tab-width 4
+			  indent-tabs-mode nil)
+
+;; Remove whitespaces
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Backups
+(setq backup-directory-alist `(("." . "~/.emacs.d/backups/")))
+(setq backup-enable-predicate
+           (lambda (name)
+             (and (normal-backup-enable-predicate name)
+                  (not
+                   (let ((method (file-remote-p name 'method)))
+                     (when (stringp method)
+                       (member method '("su" "sudo"))))))))
+
+;; Extended files
+(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
+
+;; Vala highlight
+(autoload 'vala-mode "vala-mode" "Major mode for editing Vala code." t)
+(add-to-list 'auto-mode-alist '("\\.vala$" . vala-mode))
+(add-to-list 'auto-mode-alist '("\\.vapi$" . vala-mode))
