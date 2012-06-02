@@ -19,8 +19,8 @@
 (setq c-default-style "bsd")
 (setq require-final-newline t)
 (setq-default c-basic-offset 4
-			  tab-width 4
-			  indent-tabs-mode nil)
+              tab-width 4
+              indent-tabs-mode nil)
 
 ;; Remove whitespaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
@@ -28,12 +28,12 @@
 ;; Backups
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups/")))
 (setq backup-enable-predicate
-           (lambda (name)
-             (and (normal-backup-enable-predicate name)
-                  (not
-                   (let ((method (file-remote-p name 'method)))
-                     (when (stringp method)
-                       (member method '("su" "sudo"))))))))
+      (lambda (name)
+        (and (normal-backup-enable-predicate name)
+             (not
+              (let ((method (file-remote-p name 'method)))
+                (when (stringp method)
+                  (member method '("su" "sudo"))))))))
 
 ;; Extended files
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
