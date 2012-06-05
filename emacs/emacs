@@ -22,6 +22,11 @@
               tab-width 4
               indent-tabs-mode nil)
 
+;; Whitespace mode (Eighty Column Rule)
+(require 'whitespace)
+(setq whitespace-style '(face empty tabs lines-tail trailing))
+(global-whitespace-mode t)
+
 ;; Remove whitespaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
