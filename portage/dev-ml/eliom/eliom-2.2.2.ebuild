@@ -12,7 +12,7 @@ SRC_URI="http://www.ocsigen.org/download/${P}.tar.gz"
 
 LICENSE="LGPL-2.1"
 SLOT="0"
-KEYWORDS="~x86"
+KEYWORDS="~x86 ~amd64"
 IUSE="doc +ocamlopt ocamlduce"
 
 DEPEND=">=dev-lang/ocaml-3.12[ocamlopt?]
