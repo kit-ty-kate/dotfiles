@@ -33,7 +33,7 @@ pkg_setup() {
 }
 
 src_prepare() {
-	epatch "${FILESDIR}/${PN}-makefile.patch"
+	epatch "${FILESDIR}/${P}-makefile.patch"
 }
 
 src_configure() {
