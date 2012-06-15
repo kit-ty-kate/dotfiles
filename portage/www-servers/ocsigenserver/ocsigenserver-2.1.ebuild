@@ -32,6 +32,10 @@ pkg_setup() {
 	enewuser ocsigenserver -1 -1 /var/www ocsigenserver
 }
 
+src_prepare() {
+	epatch "${FILESDIR}/${PN}-makefile.patch"
+}
+
 src_configure() {
 	sh configure \
 		--prefix /usr \
@@ -69,7 +73,7 @@ src_install() {
 	if use doc ; then
 		emake install.doc
 	fi
-#	emake logrotate
+	emake logrotate
 
 	newinitd "${FILESDIR}"/ocsigenserver.initd ocsigenserver || die
 	newconfd "${FILESDIR}"/ocsigenserver.confd ocsigenserver || die
