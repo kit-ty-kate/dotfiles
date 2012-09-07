@@ -1,0 +1,78 @@
+# History
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+
+# Completion
+autoload -U compinit
+compinit
+zstyle ':completion:*' menu select
+setopt completealiases
+zmodload zsh/complist
+
+# Uniquness completions
+zstyle ':completion:*:rm:*' ignore-line yes
+zstyle ':completion:*:mv:*' ignore-line yes
+zstyle ':completion:*:cp:*' ignore-line yes
+
+# Bash completion
+autoload -U bashcompinit
+bashcompinit
+
+# Colors
+autoload -U colors
+colors
+
+# Completion for kill
+zstyle ':completion:*:processes' command 'ps -au$USER'
+zstyle ':completion:*:*:kill:*:processes' list-colors "=(#b) #([0-9]#)*=36=31"
+
+# Auto cd
+setopt autocd
+
+# Variables
+MANPAGER=most
+EDITOR=vim
+GTK2_RC_FILES=~/.gtkrc-2.0
+
+# Prompt
+autoload -U promptinit
+promptinit
+prompt adam2
+
+# Keys Binding
+bindkey "^[[A" history-search-backward
+bindkey "^[[B" history-search-forward
+bindkey "^S" push-line
+bindkey "^H" run-help
+bindkey "\e[1~" beginning-of-line
+bindkey "\e[4~" end-of-line
+bindkey "\e[5~" beginning-of-history
+bindkey "\e[6~" end-of-history
+bindkey "\e[2~" quoted-insert
+bindkey "\e[3~" delete-char
+bindkey "\e[5C" forward-word
+bindkey "\eOc" emacs-forward-word
+bindkey "\e[5D" backward-word
+bindkey "\eOd" emacs-backward-word
+bindkey "\e\e[C" forward-word
+bindkey "\e\e[D" backward-word
+bindkey "\e[Z" reverse-menu-complete
+# for rxvt
+bindkey "\e[7~" beginning-of-line
+bindkey "\e[8~" end-of-line
+# # for non RH/Debian xterm, can't hurt for RH/Debian xterm
+bindkey "\eOH" beginning-of-line
+bindkey "\eOF" end-of-line
+# # for freebsd console
+bindkey "\e[H" beginning-of-line
+bindkey "\e[F" end-of-line
+# # for guake
+bindkey "\eOF" end-of-line
+bindkey "\eOH" beginning-of-line
+bindkey "^[[1;5D" backward-word
+bindkey "^[[1;5C" forward-word
+bindkey "\e[3~" delete-char
+
+# Custom file
+source ~/.zshrc_aliases
