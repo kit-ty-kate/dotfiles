@@ -36,6 +36,9 @@ export MANPAGER=most
 export EDITOR=vim
 export GTK2_RC_FILES=~/.gtkrc-2.0
 
+# Aliases
+alias ocaml='rlwrap ocaml'
+
 # Prompt
 autoload -U promptinit
 promptinit
