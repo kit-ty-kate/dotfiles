@@ -53,3 +53,7 @@
 
 ;; Haskell
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+
+;; OCaml (only with a patched tuareg-mode. See:
+;; https://forge.ocamlcore.org/tracker/index.php?func=detail&aid=917&group_id=43&atid=257 )
+(setq tuareg-case-arrow-extra-indent 2)
