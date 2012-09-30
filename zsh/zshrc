@@ -44,13 +44,13 @@ autoload -U promptinit
 promptinit
 prompt adam2
 
-# Keys Binding
+# Key Bindings
+bindkey -e
+bindkey "^H" run-help
+
+# Key Bindings from the archlinux wiki
 bindkey "^[[A" history-search-backward
 bindkey "^[[B" history-search-forward
-bindkey "^S" push-line
-bindkey "^H" run-help
-bindkey "^K" kill-line
-bindkey "^Y" yank
 bindkey "\e[1~" beginning-of-line
 bindkey "\e[4~" end-of-line
 bindkey "\e[5~" beginning-of-history
@@ -67,13 +67,13 @@ bindkey "\e[Z" reverse-menu-complete
 # for rxvt
 bindkey "\e[7~" beginning-of-line
 bindkey "\e[8~" end-of-line
-# # for non RH/Debian xterm, can't hurt for RH/Debian xterm
+# for non RH/Debian xterm, can't hurt for RH/Debian xterm
 bindkey "\eOH" beginning-of-line
 bindkey "\eOF" end-of-line
-# # for freebsd console
+# for freebsd console
 bindkey "\e[H" beginning-of-line
 bindkey "\e[F" end-of-line
-# # for guake
+# for guake
 bindkey "\eOF" end-of-line
 bindkey "\eOH" beginning-of-line
 bindkey "^[[1;5D" backward-word
