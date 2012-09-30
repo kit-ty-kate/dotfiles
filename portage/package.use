@@ -1,0 +1,26 @@
+x11-misc/xscreensaver -perl
+app-portage/layman bazaar cvs darcs git mercurial subversion
+net-im/pidgin -gstreamer -ncurses -xscreensaver
+dev-dotnet/libgdiplus -cairo
+net-misc/knock -server
+dev-libs/libxml2 python
+sys-devel/gcc graphite objc objc++ objc-gc
+app-editors/emacs -alsa
+x11-libs/pango X
+sys-libs/zlib minizip
+x11-libs/cairo xcb X
+media-libs/imlib2 X png
+app-crypt/pinentry gtk
+net-fs/openafs kerberos
+dev-cpp/gtkmm X
+x11-libs/gtk+ X
+app-text/mupdf X
+media-libs/libpng apng
+sys-apps/dbus X
+dev-ml/cairo-ocaml gtk
+dev-vcs/git subversion
+dev-vcs/subversion -dso perl
+media-gfx/imagemagick png
+dev-lang/php cgi
+media-libs/sdl-image jpeg png
+media-libs/libsdl X opengl
