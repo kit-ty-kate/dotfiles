@@ -47,3 +47,9 @@
 (autoload 'vala-mode "vala-mode" "Major mode for editing Vala code." t)
 (add-to-list 'auto-mode-alist '("\\.vala$" . vala-mode))
 (add-to-list 'auto-mode-alist '("\\.vapi$" . vala-mode))
+
+;; Ocsigen
+(add-to-list 'auto-mode-alist '("\\.eliom$" . tuareg-mode))
+
+;; Haskell
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
