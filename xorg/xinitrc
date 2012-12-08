@@ -1,0 +1,27 @@
+#!/bin/sh
+
+# Exports:
+export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
+export GTK_IM_MODULE=xim
+
+# Num. Lock:
+numlockx &
+
+# Clipboard
+parcellite -d &
+
+# Zlock
+xscreensaver -no-splash &
+
+# Pidgin (netsoul)
+#pidgin &
+
+# Keyboard layout
+setxkbmap fr bepo
+
+# Background
+#feh --bg-fill pictures/bg.png
+
+# WM:
+exec awesome
+#exec xmonad
