@@ -17,11 +17,11 @@ xscreensaver -no-splash &
 #pidgin &
 
 # Keyboard layout
-setxkbmap fr bepo
+setxkbmap fr bepo &
 
 # Background
-#feh --bg-fill pictures/bg.png
+feh --bg-fill pictures/bg.png &
 
 # WM:
-exec awesome
-#exec xmonad
+#exec awesome
+exec xmonad
