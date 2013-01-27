@@ -7,7 +7,6 @@ import qualified XMonad.Layout.PerWorkspace as WS
 import qualified XMonad.Layout.Grid as Grid
 import qualified XMonad.StackSet as W
 import qualified XMonad.Actions.GridSelect as GridSelect
-import qualified XMonad.Hooks.FadeInactive as Fade
 import qualified XMonad.Hooks.UrgencyHook as Urgency
 import qualified XMonad.Actions.FindEmptyWorkspace as Empty
 import qualified XMonad.Prompt as Prompt
@@ -15,27 +14,26 @@ import qualified XMonad.Prompt.Ssh as Ssh
 import qualified XMonad.Prompt.Shell as Shell
 import qualified XMonad.Prompt.Window as PW
 import qualified XMonad.Actions.PhysicalScreens as PS
+import qualified XMonad.Layout as Layout
 import qualified XMonad.Layout.ResizableTile as RT
 import qualified XMonad.Prompt.AppLauncher as AL
+import qualified XMonad.Hooks.DynamicLog as Log
+import qualified XMonad.Hooks.ManageDocks as Docks
 
-main = do
-  X.xmonad
-  $ Urgency.withUrgencyHook Urgency.dzenUrgencyHook
-        { Urgency.args = ["-w", "550", "-fg", "#ffffff"] }
-        $ X.defaultConfig
-              { X.modMask            = X.mod4Mask
-              , X.layoutHook         = myLayout
-              , X.workspaces         = myWorkspaces
-              , X.manageHook         = newManageHook
-              , X.logHook            = myLogHook
-              , X.keys               = newKeys
-              , X.borderWidth        = 2
-              , X.terminal           = myTerminal
-              , X.normalBorderColor  = "#1c1c1c"
-              , X.focusedBorderColor = "#cd5c5c"
-              }
+main =
+    X.xmonad =<< Log.xmobar X.defaultConfig
+               { X.modMask            = X.mod4Mask
+               , X.layoutHook         = myLayout
+               , X.workspaces         = myWorkspaces
+               , X.manageHook         = newManageHook
+               , X.keys               = newKeys
+               , X.borderWidth        = 2
+               , X.terminal           = myTerminal
+               , X.normalBorderColor  = "#1c1c1c"
+               , X.focusedBorderColor = "#cd5c5c"
+               }
 
-myWorkspaces = ["root", "1", "2", "3", "4", "5", "www", "mail", "msg", "irc", "music"]
+myWorkspaces = "root" : map show [1..5] ++ ["www", "mail", "msg", "irc", "music"]
 myTerminal = "valaterm"
 myFont = "fixed"
 myWorkspaceWindows =
@@ -57,17 +55,12 @@ myXPConfig =
     , Prompt.borderColor = "#1c1c1c"
     }
 
-myLogHook :: X.X ()
-myLogHook =
-    Fade.fadeInactiveLogHook fadeAmount
-    where
-      fadeAmount = 0.9
-
 myLayout =
-    WS.onWorkspace
-    "msg"
-    tiled_msg
-    $ Space.spacing 0 $ Grid.Grid ||| tiled
+    Docks.avoidStruts
+             (WS.onWorkspace "msg" tiled_msg
+                    $ tiled ||| Grid.Grid ||| Layout.Full
+             )
+             ||| Layout.Full
  where
    tiled = RT.ResizableTall nmaster delta ratio []
    nmaster = 1
@@ -107,9 +100,7 @@ myKeys conf@(X.XConfig {X.modMask = modm}) =
    where
       gsConfig = myBuildGSConfig GridSelect.defaultGSConfig
 
-gsconfig2 colorizer =
-    myBuildGSConfig
-    (GridSelect.buildDefaultGSConfig colorizer)
+gsconfig2 = myBuildGSConfig . GridSelect.buildDefaultGSConfig
 
 myBuildGSConfig config =
     config
@@ -120,19 +111,19 @@ myBuildGSConfig config =
 
 myColorizer =
     GridSelect.colorRangeFromClassName
-    (0xD2, 0xF0, 0x81)
-    (0x7D, 0xAB, 0x00)
-    (0x0D, 0x17, 0x1A)
-    black
-    white
+                  (0xD2, 0xF0, 0x81)
+                  (0x7D, 0xAB, 0x00)
+                  (0x0D, 0x17, 0x1A)
+                  black
+                  white
     where
       black = minBound
       white = maxBound
 
 myManageHook =
     X.composeAll
-    $ map (uncurry toWorkspace) myWorkspaceWindows
-          ++ map floatWindow myFloatingWindows
+         $ map (uncurry toWorkspace) myWorkspaceWindows
+               ++ map floatWindow myFloatingWindows
 
 newManageHook = myManageHook <+> X.manageHook X.defaultConfig
 
