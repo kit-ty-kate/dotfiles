@@ -21,7 +21,7 @@ import qualified XMonad.Hooks.DynamicLog as Log
 import qualified XMonad.Hooks.ManageDocks as Docks
 
 main =
-    X.xmonad =<< Log.xmobar X.defaultConfig
+    X.xmonad =<< xmobarStatusBar X.defaultConfig
                { X.modMask            = X.mod4Mask
                , X.layoutHook         = myLayout
                , X.workspaces         = myWorkspaces
@@ -31,8 +31,14 @@ main =
                , X.terminal           = myTerminal
                , X.normalBorderColor  = "#1c1c1c"
                , X.focusedBorderColor = "#cd5c5c"
+               , X.focusFollowsMouse  = False
                }
 
+xmobarStatusBar =
+    Log.statusBar myXmobarCmd Log.xmobarPP toggleStrutsKey
+    where toggleStrutsKey X.XConfig {X.modMask = modm} = (modm, X.xK_b)
+
+myXmobarCmd = "xmobar -f " ++ myFont
 myWorkspaces = "root" : map show [1..5] ++ ["www", "mail", "msg", "irc", "music"]
 myTerminal = "valaterm"
 myFont = "fixed"
@@ -60,7 +66,6 @@ myLayout =
              (WS.onWorkspace "msg" tiled_msg
                     $ tiled ||| Grid.Grid ||| Layout.Full
              )
-             ||| Layout.Full
  where
    tiled = RT.ResizableTall nmaster delta ratio []
    nmaster = 1
