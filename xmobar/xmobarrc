@@ -1,0 +1,15 @@
+Config { font     = "fixed"
+       , bgColor  = "#000000"
+       , fgColor  = "#BFBFBF"
+       , position = Top
+       , lowerOnStart = True
+       , commands = [ Run Date "%a %b %_d %Y * %H:%M:%S" "theDate" 10
+                    , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
+                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+                    , Run StdinReader
+                    , Run ThermalZone 9 ["-t","<temp>°C"] 30
+                    ]
+       , sepChar  = "%"
+       , alignSep = "}{"
+       , template = "%StdinReader% }{ %thermal9% * %cpu% * %memory% * <fc=#FF0000>%theDate%</fc>"
+       }
