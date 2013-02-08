@@ -8,8 +8,9 @@ Config { font     = "fixed"
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run StdinReader
                     , Run ThermalZone 9 ["-t","<temp>°C"] 30
+                    , Run Battery [] 10
                     ]
        , sepChar  = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %thermal9% * %cpu% * %memory% * <fc=#FF0000>%theDate%</fc>"
+       , template = "%StdinReader% }{ %battery% * %thermal9% * %cpu% * %memory% * <fc=#FF0000>%theDate%</fc>"
        }
