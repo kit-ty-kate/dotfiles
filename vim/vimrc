@@ -19,3 +19,7 @@ set backspace=indent,eol,start " Allow backspacing over indent, eol, start
 " Whitespace mode (Eighty Column Rule)
 highlight OverLength ctermbg=red ctermfg=white
 match OverLength /\%81v.\+/
+
+if &diff
+    colorscheme evening
+endif
