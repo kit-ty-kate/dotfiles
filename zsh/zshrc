@@ -39,6 +39,7 @@ export SDL_AUDIODRIVER=alsa
 
 # Aliases
 alias ocaml='rlwrap ocaml'
+alias coqtop='rlwrap coqtop'
 alias ll='ls -l'
 alias ne="emacs"
 alias ls="ls --color"
