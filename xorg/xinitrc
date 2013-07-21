@@ -25,6 +25,9 @@ feh --bg-fill pictures/bg.png &
 # ssh-agent
 eval `ssh-agent`
 
+# DBus
+eval `dbus-launch --sh-syntax --exit-with-session`
+
 # WM:
 #exec awesome
 exec xmonad
