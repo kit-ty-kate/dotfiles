@@ -19,9 +19,11 @@ import qualified XMonad.Layout.ResizableTile as RT
 import qualified XMonad.Prompt.AppLauncher as AL
 import qualified XMonad.Hooks.DynamicLog as Log
 import qualified XMonad.Hooks.ManageDocks as Docks
+import qualified XMonad.Hooks.FadeInactive as Fade
+import qualified System.Exit as Exit
 
 main =
-    X.xmonad =<< xmobarStatusBar X.defaultConfig
+    xmobarStatusBar X.defaultConfig
                { X.modMask            = X.mod4Mask
                , X.layoutHook         = myLayout
                , X.workspaces         = myWorkspaces
@@ -32,11 +34,15 @@ main =
                , X.normalBorderColor  = "#1c1c1c"
                , X.focusedBorderColor = "#cd5c5c"
                , X.focusFollowsMouse  = False
+               , X.logHook            = Fade.fadeInactiveLogHook 0xbbbbbbbb
                }
+               >>= X.xmonad
 
 xmobarStatusBar =
-    Log.statusBar myXmobarCmd Log.xmobarPP toggleStrutsKey
-    where toggleStrutsKey X.XConfig {X.modMask = modm} = (modm, X.xK_b)
+    Log.statusBar myXmobarCmd pp toggleStrutsKey
+    where
+      toggleStrutsKey X.XConfig {X.modMask = modm} = (modm, X.xK_b)
+      pp = Log.xmobarPP { Log.ppUrgent = Log.xmobarColor "yellow" "red" . Log.xmobarStrip }
 
 myXmobarCmd = "xmobar -f " ++ myFont
 myWorkspaces = "root" : map show [1..5] ++ ["www", "mail", "msg", "irc", "music"]
@@ -44,7 +50,9 @@ myTerminal = "valaterm"
 myFont = "fixed"
 myWorkspaceWindows =
     [ ("Firefox", "www")
+    , ("Iceweasel", "www")
     , ("Thunderbird", "mail")
+    , ("Icedove", "mail")
     , ("Pidgin", "msg")
     ]
 myFloatingWindows = ["Save As...", "Open"]
@@ -101,9 +109,16 @@ myKeys conf@(X.XConfig {X.modMask = modm}) =
     , ((modm,                   X.xK_x),         X.sendMessage RT.MirrorExpand)
     , ((modm,                   X.xK_h),         X.sendMessage X.Shrink)
     , ((modm,                   X.xK_l),         X.sendMessage X.Expand)
+    , ((modm .|. X.shiftMask,   X.xK_q),         X.io (Exit.exitWith Exit.ExitSuccess))
     ]
+    -- mod-[1..9] %! Switch to workspace N
+    -- mod-shift-[1..9] %! Move client to workspace N
+    ++ [((m .|. modm, k), X.windows $ f i)
+       | (i, k) <- zip (X.workspaces conf) numBepo
+       , (f, m) <- [(W.greedyView, 0), (W.shift, X.shiftMask)]]
    where
       gsConfig = myBuildGSConfig GridSelect.defaultGSConfig
+      numBepo = [X.xK_dollar, 0x22, 0xab, 0xbb, 0x28, 0x29, 0x40, 0x2b, 0x2d, 0x2f, 0x2a]
 
 gsconfig2 = myBuildGSConfig . GridSelect.buildDefaultGSConfig
 
