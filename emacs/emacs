@@ -15,6 +15,9 @@
 (require 'paren)
 (show-paren-mode)
 
+(require 'package)
+(package-initialize)
+
 ;; Indent style
 (setq c-default-style "bsd")
 (setq require-final-newline t)
@@ -49,11 +52,20 @@
 (add-to-list 'auto-mode-alist '("\\.vapi$" . vala-mode))
 
 ;; Ocsigen
-(add-to-list 'auto-mode-alist '("\\.eliom$" . tuareg-mode))
+(add-to-list 'auto-mode-alist '("\\.eliomi?$" . tuareg-mode))
 
 ;; Haskell
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
 ;; OCaml (only with a patched tuareg-mode. See:
 ;; https://forge.ocamlcore.org/tracker/index.php?func=detail&aid=917&group_id=43&atid=257 )
-(setq tuareg-case-arrow-extra-indent 2)
+;;(setq tuareg-case-arrow-extra-indent 2)
+
+;; ocp-indent
+(load-file "~/.opam/4.00.1/share/typerex/ocp-indent/ocp-indent.el")
+
+;; Merlin
+(add-to-list 'load-path "~/.opam/4.00.1/share/emacs/site-lisp/")
+(require 'merlin)
+(add-hook 'tuareg-mode-hook 'merlin-mode)
+(setq merlin-use-auto-complete-mode t)
