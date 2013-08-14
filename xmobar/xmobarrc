@@ -7,10 +7,11 @@ Config { font     = "fixed"
                     , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run StdinReader
-                    , Run ThermalZone 9 ["-t","<temp>°C"] 30
-                    , Run Battery [] 10
+                    , Run ThermalZone 9 ["-t","<temp>°C"] 100
+                    , Run Wireless "wlan0" [] 100
+                    , Run Battery [] 500
                     ]
        , sepChar  = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %battery% * %thermal9% * %cpu% * %memory% * <fc=#FF0000>%theDate%</fc>"
+       , template = "%StdinReader% }{ %battery% <fc=#FF0000>*</fc> %wlan0wi% <fc=#FF0000>*</fc> %thermal9% <fc=#FF0000>*</fc> %cpu% <fc=#FF0000>*</fc> %memory% <fc=#FF0000>*</fc> %theDate%"
        }
