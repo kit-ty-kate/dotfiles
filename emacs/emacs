@@ -11,6 +11,10 @@
 ;; Colors
 (global-font-lock-mode t)
 
+;; Split files vertically by default
+(setq split-height-threshold nil)
+(setq split-width-threshold 0)
+
 ;; Show paren
 (require 'paren)
 (show-paren-mode)
@@ -61,11 +65,17 @@
 ;; https://forge.ocamlcore.org/tracker/index.php?func=detail&aid=917&group_id=43&atid=257 )
 ;;(setq tuareg-case-arrow-extra-indent 2)
 
+;; OPAM
+(setq opam-share
+  (substring
+    (shell-command-to-string "opam config var share")
+    0 -1))
+
 ;; ocp-indent
-(load-file "~/.opam/4.00.1/share/typerex/ocp-indent/ocp-indent.el")
+(load-file (format "%s/typerex/ocp-indent/ocp-indent.el" opam-share))
 
 ;; Merlin
-(add-to-list 'load-path "~/.opam/4.00.1/share/emacs/site-lisp/")
+(add-to-list 'load-path (format "%s/emacs/site-lisp/" opam-share))
 (require 'merlin)
 (add-hook 'tuareg-mode-hook 'merlin-mode)
 (setq merlin-use-auto-complete-mode t)
