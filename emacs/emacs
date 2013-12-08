@@ -47,8 +47,17 @@
                 (when (stringp method)
                   (member method '("su" "sudo"))))))))
 
+;; OPAM
+(setq opam-share
+  (substring
+    (shell-command-to-string "opam config var share")
+    0 -1))
+
 ;; Extended files
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
+
+;; Tuareg
+(load-file (format "%s/tuareg/tuareg-site-file.elc" opam-share))
 
 ;; Vala highlight
 (autoload 'vala-mode "vala-mode" "Major mode for editing Vala code." t)
@@ -65,17 +74,15 @@
 ;; https://forge.ocamlcore.org/tracker/index.php?func=detail&aid=917&group_id=43&atid=257 )
 ;;(setq tuareg-case-arrow-extra-indent 2)
 
-;; OPAM
-(setq opam-share
-  (substring
-    (shell-command-to-string "opam config var share")
-    0 -1))
-
 ;; ocp-indent
-(load-file (format "%s/typerex/ocp-indent/ocp-indent.el" opam-share))
+(load-file (format "%s/emacs/site-lisp/ocp-indent.el" opam-share))
 
 ;; Merlin
 (add-to-list 'load-path (format "%s/emacs/site-lisp/" opam-share))
 (require 'merlin)
 (add-hook 'tuareg-mode-hook 'merlin-mode)
 (setq merlin-use-auto-complete-mode t)
+
+;; Patoline
+(add-to-list 'load-path (format "%s/emacs/site-lisp/patoline" opam-share))
+(load-file (format "%s/emacs/site-lisp/patoline/patoline-mode.el" opam-share))
