@@ -48,6 +48,11 @@ alias ls="ls --color"
 alias grep='grep --color=auto'
 alias pcat='pygmentize'
 
+# Functions
+function mkdircd {
+    mkdir $1 && cd $1
+}
+
 # Prompt
 autoload -U promptinit
 promptinit
