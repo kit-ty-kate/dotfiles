@@ -55,6 +55,8 @@
 
 ;; Extended files
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
+(add-to-list 'load-path (format "%s/emacs/site-lisp/" opam-share))
+(add-to-list 'load-path (format "%s/emacs/site-lisp/patoline" opam-share))
 
 ;; Tuareg
 (load-file (format "%s/tuareg/tuareg-site-file.elc" opam-share))
@@ -75,14 +77,12 @@
 ;;(setq tuareg-case-arrow-extra-indent 2)
 
 ;; ocp-indent
-(load-file (format "%s/emacs/site-lisp/ocp-indent.el" opam-share))
+(require 'ocp-indent)
 
 ;; Merlin
-(add-to-list 'load-path (format "%s/emacs/site-lisp/" opam-share))
 (require 'merlin)
 (add-hook 'tuareg-mode-hook 'merlin-mode)
 (setq merlin-use-auto-complete-mode t)
 
 ;; Patoline
-(add-to-list 'load-path (format "%s/emacs/site-lisp/patoline" opam-share))
-(load-file (format "%s/emacs/site-lisp/patoline/patoline-mode.el" opam-share))
+(require 'patoline-mode)
