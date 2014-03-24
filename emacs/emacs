@@ -37,6 +37,9 @@
 ;; Remove whitespaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
+;; Autocompletion mode
+(setq ac-auto-start nil)
+
 ;; Backups
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups/")))
 (setq backup-enable-predicate
@@ -83,6 +86,7 @@
 (require 'merlin)
 (add-hook 'tuareg-mode-hook 'merlin-mode)
 (setq merlin-use-auto-complete-mode t)
+(define-key ac-mode-map (kbd "M-TAB") 'merlin-try-completion)
 
 ;; Patoline
 (require 'patoline-mode)
