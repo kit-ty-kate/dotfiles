@@ -50,6 +50,10 @@
                 (when (stringp method)
                   (member method '("su" "sudo"))))))))
 
+;; Packages
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+
 ;; OPAM
 (setq opam-share
   (substring
@@ -60,6 +64,11 @@
 (add-to-list 'load-path (expand-file-name "~/.emacs.d"))
 (add-to-list 'load-path (format "%s/emacs/site-lisp/" opam-share))
 (add-to-list 'load-path (format "%s/emacs/site-lisp/patoline" opam-share))
+
+;; Evil
+(setq evil-toggle-key "C-u")
+(require 'evil)
+(evil-mode 1)
 
 ;; Tuareg
 (load-file (format "%s/tuareg/tuareg-site-file.elc" opam-share))
@@ -84,9 +93,19 @@
 
 ;; Merlin
 (require 'merlin)
+(require 'merlin-iedit)
 (add-hook 'tuareg-mode-hook 'merlin-mode)
 (setq merlin-use-auto-complete-mode t)
 (define-key ac-mode-map (kbd "M-TAB") 'merlin-try-completion)
 
+(defun evil-custom-merlin-iedit ()
+  (interactive)
+  (if iedit-mode (iedit-mode)
+    (merlin-iedit-occurrences)))
+(define-key merlin-mode-map (kbd "M-r") 'evil-custom-merlin-iedit)
+
 ;; Patoline
 (require 'patoline-mode)
+
+;; Why3
+(require 'why3)
