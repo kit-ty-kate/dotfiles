@@ -1,0 +1,4 @@
+set gui=nonavigation
+
+map ç :set gui=navigation<CR>
+map Ç :set gui=nonavigation<CR>
