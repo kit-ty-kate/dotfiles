@@ -9,6 +9,7 @@
 (line-number-mode t)
 
 ;; Colors
+(require 'color)
 (global-font-lock-mode t)
 
 ;; Split files vertically by default
@@ -109,3 +110,7 @@
 
 ;; Why3
 (require 'why3)
+
+;; Prolog
+(autoload 'prolog-mode "prolog" "Major mode for editing Prolog programs." t)
+(add-to-list 'auto-mode-alist '("\\.pl$" . prolog-mode))
