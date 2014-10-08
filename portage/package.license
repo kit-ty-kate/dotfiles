@@ -1,6 +1,0 @@
-net-wireless/iwl6000-ucode ipw3945
-sys-firmware/iwl6000-ucode ipw3945
-net-fs/openafs-kernel openafs-krb5-a sun-rpc
-net-fs/openafs openafs-krb5-a sun-rpc
-sys-kernel/gentoo-sources freedist
-www-plugins/adobe-flash AdobeFlash-10.3
