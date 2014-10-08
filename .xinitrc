@@ -7,6 +7,9 @@ export GTK_IM_MODULE=xim
 # Num. Lock:
 numlockx &
 
+# xmodmap
+xmodmap ~/.Xmodmap &
+
 # Clipboard
 parcellite -d &
 
@@ -27,6 +30,9 @@ eval `ssh-agent`
 
 # DBus
 eval `dbus-launch --sh-syntax --exit-with-session`
+
+# Notification tool
+trayer --edge top --align center --SetDockType true --SetPartialStrut true --expand true --width 18 --height 17 --transparent true --tint 0x000000 &
 
 # WM:
 #exec awesome
