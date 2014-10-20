@@ -38,9 +38,6 @@
 ;; Remove whitespaces
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-;; Autocompletion mode
-(setq ac-auto-start nil)
-
 ;; Backups
 (setq backup-directory-alist `(("." . "~/.emacs.d/backups/")))
 (setq backup-enable-predicate
@@ -72,7 +69,7 @@
 (evil-mode 1)
 
 ;; Tuareg
-(load-file (format "%s/tuareg/tuareg-site-file.elc" opam-share))
+(load "tuareg-site-file")
 
 ;; Vala highlight
 (autoload 'vala-mode "vala-mode" "Major mode for editing Vala code." t)
@@ -83,11 +80,7 @@
 (add-to-list 'auto-mode-alist '("\\.eliomi?$" . tuareg-mode))
 
 ;; Haskell
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-
-;; OCaml (only with a patched tuareg-mode. See:
-;; https://forge.ocamlcore.org/tracker/index.php?func=detail&aid=917&group_id=43&atid=257 )
-;;(setq tuareg-case-arrow-extra-indent 2)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
 ;; ocp-indent
 (require 'ocp-indent)
@@ -95,8 +88,9 @@
 ;; Merlin
 (require 'merlin)
 (require 'merlin-iedit)
-(add-hook 'tuareg-mode-hook 'merlin-mode)
-(setq merlin-use-auto-complete-mode t)
+(add-hook 'tuareg-mode-hook 'merlin-mode t)
+(setq merlin-use-auto-complete-mode 'easy)
+(setq merlin-command 'opam)
 (define-key ac-mode-map (kbd "M-TAB") 'merlin-try-completion)
 
 (defun evil-custom-merlin-iedit ()
