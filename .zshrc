@@ -11,6 +11,7 @@ compinit
 zstyle ':completion:*' menu select
 setopt completealiases
 zmodload zsh/complist
+compdef -d java
 
 # Uniquness completions
 zstyle ':completion:*:rm:*' ignore-line yes
@@ -43,6 +44,8 @@ alias ocaml='rlwrap ocaml'
 alias coqtop='rlwrap coqtop'
 alias ll='ls -l'
 alias ne="emacs"
+alias emacs="emacs -nw"
+alias emacsx="emacs"
 alias ls="ls --color"
 alias grep='grep --color=auto'
 alias pcat='pygmentize'
