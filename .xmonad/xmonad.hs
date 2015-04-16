@@ -21,22 +21,27 @@ import qualified XMonad.Hooks.DynamicLog as Log
 import qualified XMonad.Hooks.ManageDocks as Docks
 import qualified XMonad.Hooks.FadeInactive as Fade
 import qualified System.Exit as Exit
+import qualified XMonad.Hooks.EwmhDesktops as Ewmh
 
 main =
-    xmobarStatusBar X.defaultConfig
-               { X.modMask            = X.mod4Mask
-               , X.layoutHook         = myLayout
-               , X.workspaces         = myWorkspaces
-               , X.manageHook         = newManageHook
-               , X.keys               = newKeys
-               , X.borderWidth        = 2
-               , X.terminal           = myTerminal
-               , X.normalBorderColor  = "#1c1c1c"
-               , X.focusedBorderColor = "#cd5c5c"
-               , X.focusFollowsMouse  = False
-               , X.logHook            = Fade.fadeInactiveLogHook 0xbbbbbbbb
-               }
-               >>= X.xmonad
+    xmobarStatusBar conf >>= X.xmonad
+
+conf =
+    Ewmh.ewmh
+    X.defaultConfig
+         { X.modMask            = X.mod4Mask
+         , X.layoutHook         = myLayout
+         , X.workspaces         = myWorkspaces
+         , X.manageHook         = newManageHook
+         , X.keys               = newKeys
+         , X.borderWidth        = 2
+         , X.terminal           = myTerminal
+         , X.normalBorderColor  = "#1c1c1c"
+         , X.focusedBorderColor = "#cd5c5c"
+         , X.focusFollowsMouse  = False
+         , X.logHook            = Fade.fadeInactiveLogHook 0xffffffff
+         , X.handleEventHook    = X.handleEventHook X.defaultConfig <+> Ewmh.fullscreenEventHook
+         }
 
 xmobarStatusBar =
     Log.statusBar myXmobarCmd pp toggleStrutsKey
@@ -55,32 +60,26 @@ myWorkspaceWindows =
     , ("Icedove", "mail")
     , ("Pidgin", "msg")
     ]
-myFloatingWindows = ["Save As...", "Open"]
 
 myXPConfig :: Prompt.XPConfig
 myXPConfig =
     Prompt.defaultXPConfig
-    { Prompt.font        = myFont
-    , Prompt.position    = Prompt.Top
-    , Prompt.bgColor     = "#080808"
-    , Prompt.fgColor     = "#ffffff"
-    , Prompt.bgHLight    = "#0087ff"
-    , Prompt.fgHLight    = "#ffffff"
-    , Prompt.borderColor = "#1c1c1c"
-    }
+        { Prompt.font        = myFont
+        , Prompt.position    = Prompt.Top
+        , Prompt.bgColor     = "#080808"
+        , Prompt.fgColor     = "#ffffff"
+        , Prompt.bgHLight    = "#0087ff"
+        , Prompt.fgHLight    = "#ffffff"
+        , Prompt.borderColor = "#1c1c1c"
+        }
 
 myLayout =
-    Docks.avoidStruts
-             (WS.onWorkspace "msg" tiled_msg
-                    $ tiled ||| Grid.Grid ||| Layout.Full
-             )
- where
-   tiled = RT.ResizableTall nmaster delta ratio []
-   nmaster = 1
-   delta = 3/100
-   ratio = 1/2
-   tiled_msg = X.Tall nmaster delta ratio_msg
-   ratio_msg = 4/5
+    Docks.avoidStruts $ tiled ||| Grid.Grid ||| Layout.Full
+    where
+      tiled = RT.ResizableTall nmaster delta ratio []
+      nmaster = 1
+      delta = 3/100
+      ratio = 1/2
 
 newKeys x = (M.fromList (myKeys x))
 myKeys conf@(X.XConfig {X.modMask = modm}) =
@@ -114,9 +113,10 @@ myKeys conf@(X.XConfig {X.modMask = modm}) =
     -- mod-[1..9] %! Switch to workspace N
     -- mod-shift-[1..9] %! Move client to workspace N
     ++ [((m .|. modm, k), X.windows $ f i)
-       | (i, k) <- zip (X.workspaces conf) numBepo
-       , (f, m) <- [(W.greedyView, 0), (W.shift, X.shiftMask)]]
-   where
+        | (i, k) <- zip (X.workspaces conf) numBepo
+       , (f, m) <- [(W.greedyView, 0), (W.shift, X.shiftMask)]
+       ]
+    where
       gsConfig = myBuildGSConfig GridSelect.defaultGSConfig
       numBepo = [X.xK_dollar, 0x22, 0xab, 0xbb, 0x28, 0x29, 0x40, 0x2b, 0x2d, 0x2f, 0x2a]
 
@@ -124,28 +124,25 @@ gsconfig2 = myBuildGSConfig . GridSelect.buildDefaultGSConfig
 
 myBuildGSConfig config =
     config
-    { GridSelect.gs_cellheight = 60,
-      GridSelect.gs_cellwidth = 250,
-      GridSelect.gs_font = myFont
-    }
+        { GridSelect.gs_cellheight = 60
+        , GridSelect.gs_cellwidth = 250
+        , GridSelect.gs_font = myFont
+        }
 
 myColorizer =
     GridSelect.colorRangeFromClassName
-                  (0xD2, 0xF0, 0x81)
-                  (0x7D, 0xAB, 0x00)
-                  (0x0D, 0x17, 0x1A)
-                  black
-                  white
+        (0xD2, 0xF0, 0x81)
+        (0x7D, 0xAB, 0x00)
+        (0x0D, 0x17, 0x1A)
+        black
+        white
     where
       black = minBound
       white = maxBound
 
 myManageHook =
-    X.composeAll
-         $ map (uncurry toWorkspace) myWorkspaceWindows
-               ++ map floatWindow myFloatingWindows
+    X.composeAll $ map (uncurry toWorkspace) myWorkspaceWindows
 
 newManageHook = myManageHook <+> X.manageHook X.defaultConfig
 
 toWorkspace name workspace = X.className =? name --> X.doF (W.shift workspace)
-floatWindow name = X.className =? name --> X.doFloat
