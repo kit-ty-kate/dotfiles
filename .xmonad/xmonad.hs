@@ -22,25 +22,24 @@ import qualified XMonad.Hooks.ManageDocks as Docks
 import qualified XMonad.Hooks.FadeInactive as Fade
 import qualified System.Exit as Exit
 import qualified XMonad.Hooks.EwmhDesktops as Ewmh
+import qualified XMonad.Layout.NoBorders as Borders
 
 main =
     xmobarStatusBar conf >>= X.xmonad
 
 conf =
-    Ewmh.ewmh
     X.defaultConfig
          { X.modMask            = X.mod4Mask
          , X.layoutHook         = myLayout
          , X.workspaces         = myWorkspaces
          , X.manageHook         = newManageHook
          , X.keys               = newKeys
-         , X.borderWidth        = 2
+         , X.borderWidth        = 0
          , X.terminal           = myTerminal
          , X.normalBorderColor  = "#1c1c1c"
          , X.focusedBorderColor = "#cd5c5c"
          , X.focusFollowsMouse  = False
          , X.logHook            = Fade.fadeInactiveLogHook 0xffffffff
-         , X.handleEventHook    = X.handleEventHook X.defaultConfig <+> Ewmh.fullscreenEventHook
          }
 
 xmobarStatusBar =
@@ -50,7 +49,7 @@ xmobarStatusBar =
       pp = Log.xmobarPP { Log.ppUrgent = Log.xmobarColor "yellow" "red" . Log.xmobarStrip }
 
 myXmobarCmd = "xmobar -f " ++ myFont
-myWorkspaces = "root" : map show [1..5] ++ ["www", "mail", "msg", "irc", "music"]
+myWorkspaces = "root" : map show [1..5] ++ ["www", "mail", "steam", "irc", "music"]
 myTerminal = "valaterm"
 myFont = "fixed"
 myWorkspaceWindows =
@@ -58,7 +57,8 @@ myWorkspaceWindows =
     , ("Iceweasel", "www")
     , ("Thunderbird", "mail")
     , ("Icedove", "mail")
-    , ("Pidgin", "msg")
+    , ("Steam", "steam")
+    , ("Spotify", "music")
     ]
 
 myXPConfig :: Prompt.XPConfig
@@ -74,7 +74,10 @@ myXPConfig =
         }
 
 myLayout =
-    Docks.avoidStruts $ tiled ||| Grid.Grid ||| Layout.Full
+    Docks.avoidStruts
+    $ Borders.smartBorders
+    $ Borders.withBorder 2
+    $ tiled ||| Grid.Grid ||| Layout.Full
     where
       tiled = RT.ResizableTall nmaster delta ratio []
       nmaster = 1
