@@ -23,6 +23,7 @@ import qualified XMonad.Hooks.FadeInactive as Fade
 import qualified System.Exit as Exit
 import qualified XMonad.Hooks.EwmhDesktops as Ewmh
 import qualified XMonad.Layout.NoBorders as Borders
+import qualified XMonad.Actions.PhysicalScreens as Screens
 
 main =
     xmobarStatusBar conf >>= X.xmonad
@@ -112,6 +113,11 @@ myKeys conf@(X.XConfig {X.modMask = modm}) =
     , ((modm,                   X.xK_h),         X.sendMessage X.Shrink)
     , ((modm,                   X.xK_l),         X.sendMessage X.Expand)
     , ((modm .|. X.shiftMask,   X.xK_q),         X.io (Exit.exitWith Exit.ExitSuccess))
+    , ((modm,                   X.xK_n),         Cycle.swapNextScreen)
+    , ((modm,                   X.xK_a),         Screens.onPrevNeighbour W.view)
+    , ((modm,                   X.xK_o),         Screens.onNextNeighbour W.view)
+    , ((modm .|. X.shiftMask,   X.xK_a),         Screens.onPrevNeighbour W.shift)
+    , ((modm .|. X.shiftMask,   X.xK_o),         Screens.onNextNeighbour W.shift)
     ]
     -- mod-[1..9] %! Switch to workspace N
     -- mod-shift-[1..9] %! Move client to workspace N
