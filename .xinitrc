@@ -5,6 +5,9 @@ export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
 export GTK_IM_MODULE=xim
 export _JAVA_AWT_WM_NONREPARENTING=1
 
+# Compositor
+compton --backend glx --vsync opengl-swc --sw-opti --vsync-aggressive &
+
 # Num. Lock:
 numlockx &
 
