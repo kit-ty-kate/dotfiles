@@ -59,7 +59,7 @@
     0 -1))
 
 ;; Extended files
-(add-to-list 'load-path (expand-file-name "~/.emacs.d"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (add-to-list 'load-path (format "%s/emacs/site-lisp/" opam-share))
 (add-to-list 'load-path (format "%s/emacs/site-lisp/patoline" opam-share))
 
@@ -70,9 +70,13 @@
 
 ;; Tuareg
 (load "tuareg-site-file")
+(setq auto-mode-alist
+      (append '(("\\.ml[ily]?$" . tuareg-mode)
+                ("\\.topml$" . tuareg-mode))
+              auto-mode-alist))
 
 ;; Vala highlight
-(autoload 'vala-mode "vala-mode" "Major mode for editing Vala code." t)
+(require 'vala-mode)
 (add-to-list 'auto-mode-alist '("\\.vala$" . vala-mode))
 (add-to-list 'auto-mode-alist '("\\.vapi$" . vala-mode))
 
@@ -86,12 +90,13 @@
 (require 'ocp-indent)
 
 ;; Merlin
+(require 'auto-complete)
 (require 'merlin)
 (require 'merlin-iedit)
 (add-hook 'tuareg-mode-hook 'merlin-mode t)
 (setq merlin-use-auto-complete-mode 'easy)
 (setq merlin-command 'opam)
-(define-key ac-mode-map (kbd "M-TAB") 'merlin-try-completion)
+(define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
 
 (defun evil-custom-merlin-iedit ()
   (interactive)
@@ -108,3 +113,6 @@
 ;; Prolog
 (autoload 'prolog-mode "prolog" "Major mode for editing Prolog programs." t)
 (add-to-list 'auto-mode-alist '("\\.pl$" . prolog-mode))
+
+;; Ott
+(require 'ottmode)
