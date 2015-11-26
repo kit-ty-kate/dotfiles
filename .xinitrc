@@ -27,7 +27,7 @@ xscreensaver -no-splash &
 setxkbmap fr bepo &
 
 # Background
-feh --bg-fill pictures/bg.png &
+feh --bg-center pictures/bg.png &
 
 # ssh-agent
 eval `ssh-agent`
@@ -37,6 +37,15 @@ eval `dbus-launch --sh-syntax --exit-with-session`
 
 # Notification tool
 trayer --edge top --align center --SetDockType true --SetPartialStrut true --expand true --width 18 --height 17 --transparent true --tint 0x000000 &
+
+# Network manager
+nm-applet &
+
+# Redshift
+redshift-gtk -l `head -n 1 ~/.location` &
+
+# Emacs
+emacs --daemon &
 
 # WM:
 #exec awesome
