@@ -46,12 +46,12 @@ conf =
 xmobarStatusBar =
     Log.statusBar myXmobarCmd pp toggleStrutsKey
     where
-      toggleStrutsKey X.XConfig {X.modMask = modm} = (modm, X.xK_b)
+      toggleStrutsKey X.XConfig {X.modMask = modm} = (modm, X.xK_a)
       pp = Log.xmobarPP { Log.ppUrgent = Log.xmobarColor "yellow" "red" . Log.xmobarStrip }
 
 myXmobarCmd = "xmobar -f " ++ myFont
 myWorkspaces = "root" : map show [1..5] ++ ["www", "mail", "steam", "irc", "music"]
-myTerminal = "valaterm"
+myTerminal = "gnome-terminal"
 myFont = "fixed"
 myWorkspaceWindows =
     [ ("Firefox", "www")
@@ -114,9 +114,9 @@ myKeys conf@(X.XConfig {X.modMask = modm}) =
     , ((modm,                   X.xK_l),         X.sendMessage X.Expand)
     , ((modm .|. X.shiftMask,   X.xK_q),         X.io (Exit.exitWith Exit.ExitSuccess))
     , ((modm,                   X.xK_n),         Cycle.swapNextScreen)
-    , ((modm,                   X.xK_a),         Screens.onPrevNeighbour W.view)
+    , ((modm,                   X.xK_b),         Screens.onPrevNeighbour W.view)
     , ((modm,                   X.xK_o),         Screens.onNextNeighbour W.view)
-    , ((modm .|. X.shiftMask,   X.xK_a),         Screens.onPrevNeighbour W.shift)
+    , ((modm .|. X.shiftMask,   X.xK_b),         Screens.onPrevNeighbour W.shift)
     , ((modm .|. X.shiftMask,   X.xK_o),         Screens.onNextNeighbour W.shift)
     ]
     -- mod-[1..9] %! Switch to workspace N
