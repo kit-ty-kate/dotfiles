@@ -1,3 +1,5 @@
+(require 'cl)
+
 ;; Character encoding
 (set-language-environment "UTF-8")
 

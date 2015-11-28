@@ -38,6 +38,7 @@ export LANG=en_US.UTF8
 export MANPAGER=most
 export EDITOR=vim
 export SDL_AUDIODRIVER=alsa
+export TERM=xterm
 
 # Aliases
 alias ocaml='rlwrap ocaml'
