@@ -24,6 +24,7 @@ import qualified System.Exit as Exit
 import qualified XMonad.Hooks.EwmhDesktops as Ewmh
 import qualified XMonad.Layout.NoBorders as Borders
 import qualified XMonad.Actions.PhysicalScreens as Screens
+import qualified XMonad.Hooks.ManageHelpers as ManageHelpers
 
 main =
     xmobarStatusBar conf >>= X.xmonad
@@ -150,7 +151,11 @@ myColorizer =
       white = maxBound
 
 myManageHook =
-    X.composeAll $ map (uncurry toWorkspace) myWorkspaceWindows
+    X.composeAll . concat $
+        [ map (uncurry toWorkspace) myWorkspaceWindows
+        , [ ManageHelpers.isFullscreen --> ManageHelpers.doFullFloat]
+        , [ ManageHelpers.isDialog --> ManageHelpers.doCenterFloat]
+        ]
 
 newManageHook = myManageHook <+> X.manageHook X.defaultConfig
 
