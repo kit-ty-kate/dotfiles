@@ -44,9 +44,9 @@ export TERM=xterm
 alias ocaml='rlwrap ocaml'
 alias coqtop='rlwrap coqtop'
 alias ll='ls -l'
-alias ne="emacs"
-alias emacs="emacs -nw"
-alias emacsx="emacs"
+alias ne="emacsclient"
+alias emacs="emacsclient -nw"
+alias emacsx="emacsclient"
 alias ls="ls --color"
 alias grep='grep --color=auto'
 alias pcat='pygmentize'
