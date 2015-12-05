@@ -42,6 +42,7 @@ conf =
          , X.focusedBorderColor = "#cd5c5c"
          , X.focusFollowsMouse  = False
          , X.logHook            = Fade.fadeInactiveLogHook 0xffffffff
+         , X.handleEventHook    = Ewmh.fullscreenEventHook
          }
 
 xmobarStatusBar =
