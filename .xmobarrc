@@ -7,13 +7,13 @@ Config { font     = "fixed"
                     , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run StdinReader
-                    , Run ThermalZone 9 ["-t","<temp>°C"] 100
+                    , Run ThermalZone 0 ["-t","<temp>°C"] 100
 --                    , Run Volume "default" "Master" ["-t", "<volume>"] 10
 --                    , Run Wireless "wlan0" [] 100
-                    , Run DiskU [("/", "/: <free>"), ("/home", "/home: <free>")] [] 10
+                    , Run DiskU [("/", "/: <free>")] [] 10
                     , Run Battery [] 500
                     ]
        , sepChar  = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %disku% <fc=#FF0000>*</fc> %battery% <fc=#FF0000>*</fc> %thermal9% <fc=#FF0000>*</fc> %cpu% <fc=#FF0000>*</fc> %memory% <fc=#FF0000>*</fc> %theDate%"
+       , template = "%StdinReader% }{ %disku% <fc=#FF0000>*</fc> %battery% <fc=#FF0000>*</fc> %thermal0% <fc=#FF0000>*</fc> %cpu% <fc=#FF0000>*</fc> %memory% <fc=#FF0000>*</fc> %theDate%"
        }
