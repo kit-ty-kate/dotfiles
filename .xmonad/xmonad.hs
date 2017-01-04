@@ -123,10 +123,10 @@ myKeys conf@(X.XConfig {X.modMask = modm}) =
     ]
     -- mod-[1..9] %! Switch to workspace N
     -- mod-shift-[1..9] %! Move client to workspace N
-    ++ [((m .|. modm, k), X.windows $ f i)
-        | (i, k) <- zip (X.workspaces conf) numBepo
-       , (f, m) <- [(W.greedyView, 0), (W.shift, X.shiftMask)]
-       ]
+    [ ((m .|. modm, k), X.windows $ f i)
+      | (i, k) <- zip (X.workspaces conf) numBepo
+      , (f, m) <- [(W.greedyView, 0), (W.shift, X.shiftMask)]
+    ]
     where
       gsConfig = myBuildGSConfig GridSelect.defaultGSConfig
       numBepo = [X.xK_dollar, 0x22, 0xab, 0xbb, 0x28, 0x29, 0x40, 0x2b, 0x2d, 0x2f, 0x2a]
@@ -152,10 +152,10 @@ myColorizer =
       white = maxBound
 
 myManageHook =
-    X.composeAll . concat $
-        [ map (uncurry toWorkspace) myWorkspaceWindows
-        , [ ManageHelpers.isFullscreen --> ManageHelpers.doFullFloat]
-        , [ ManageHelpers.isDialog --> ManageHelpers.doCenterFloat]
+    X.composeAll $
+        map (uncurry toWorkspace) myWorkspaceWindows ++
+        [ ManageHelpers.isFullscreen --> ManageHelpers.doFullFloat
+        , ManageHelpers.isDialog --> ManageHelpers.doCenterFloat
         ]
 
 newManageHook = myManageHook <+> X.manageHook X.defaultConfig
