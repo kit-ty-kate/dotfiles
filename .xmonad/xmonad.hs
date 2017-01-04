@@ -1,6 +1,5 @@
 import XMonad ((|||), (.|.), (<+>), (=?), (-->))
 import qualified XMonad as X
-import qualified Data.Map as M
 import qualified XMonad.Actions.CycleWS as Cycle
 import qualified XMonad.Layout.Spacing as Space
 import qualified XMonad.Layout.PerWorkspace as WS
@@ -20,22 +19,33 @@ import qualified XMonad.Prompt.AppLauncher as AL
 import qualified XMonad.Hooks.DynamicLog as Log
 import qualified XMonad.Hooks.ManageDocks as Docks
 import qualified XMonad.Hooks.FadeInactive as Fade
-import qualified System.Exit as Exit
 import qualified XMonad.Hooks.EwmhDesktops as Ewmh
 import qualified XMonad.Layout.NoBorders as Borders
 import qualified XMonad.Actions.PhysicalScreens as Screens
 import qualified XMonad.Hooks.ManageHelpers as ManageHelpers
+import qualified Graphics.X11.ExtraTypes.XF86 as XF86
+import qualified Data.Map as M
+import qualified Data.IORef as IORef
+import qualified System.Exit as Exit
 
-main =
-    xmobarStatusBar conf >>= X.xmonad
+updateBrightness :: Float -> IORef.IORef Float -> X.X ()
+updateBrightness incr ref = do
+  val <- X.io (IORef.readIORef ref)
+  let newVal = max 0.1 (min 1.0 (val + incr))
+  X.io (IORef.writeIORef ref newVal)
+  X.spawn $ "$HOME/.xmonad/brightness.sh " ++ show newVal
 
-conf =
+main = do
+    brightness <- IORef.newIORef 1.0
+    xmobarStatusBar (conf brightness) >>= X.xmonad
+
+conf brightness =
     X.defaultConfig
          { X.modMask            = X.mod4Mask
          , X.layoutHook         = myLayout
          , X.workspaces         = myWorkspaces
          , X.manageHook         = newManageHook
-         , X.keys               = newKeys
+         , X.keys               = newKeys brightness
          , X.borderWidth        = 0
          , X.terminal           = myTerminal
          , X.normalBorderColor  = "#1c1c1c"
@@ -87,8 +97,8 @@ myLayout =
       delta = 3/100
       ratio = 1/2
 
-newKeys x = (M.fromList (myKeys x))
-myKeys conf@(X.XConfig {X.modMask = modm}) =
+newKeys brightness x = (M.fromList (myKeys brightness x))
+myKeys brightness conf@(X.XConfig {X.modMask = modm}) =
     [ ((modm,                   X.xK_c),         X.kill)
     , ((modm,                   X.xK_s),         Ssh.sshPrompt myXPConfig)
     , ((modm,                   X.xK_f),         X.withFocused $ X.windows . W.sink)
@@ -102,10 +112,8 @@ myKeys conf@(X.XConfig {X.modMask = modm}) =
     , ((modm .|. X.shiftMask,   X.xK_Left),      PS.onNextNeighbour W.shift)
     , ((modm,                   X.xK_Down),      Empty.viewEmptyWorkspace)
     , ((modm,                   X.xK_BackSpace), Shell.shellPrompt myXPConfig)
-    , ((0,                      0x1008ff13),     X.spawn "amixer -q sset Master 2dB+")
     , ((modm,                   X.xK_z),         X.spawn "xscreensaver-command -lock")
     , ((modm,                   X.xK_space),     X.sendMessage X.NextLayout)
-    , ((0,                      0x1008ff11),     X.spawn "amixer -q sset Master 2dB-")
     , ((modm,                   X.xK_Return),    X.spawn myTerminal)
     , ((modm .|. X.shiftMask,   X.xK_Up),        GridSelect.goToSelected $ gsconfig2 myColorizer)
     , ((modm,                   X.xK_Up),        GridSelect.gridselectWorkspace gsConfig W.greedyView)
@@ -120,7 +128,14 @@ myKeys conf@(X.XConfig {X.modMask = modm}) =
     , ((modm,                   X.xK_o),         Screens.onNextNeighbour W.view)
     , ((modm .|. X.shiftMask,   X.xK_b),         Screens.onPrevNeighbour W.shift)
     , ((modm .|. X.shiftMask,   X.xK_o),         Screens.onNextNeighbour W.shift)
-    ]
+    ] ++
+    [ ((0,       XF86.xF86XK_MonBrightnessUp),   updateBrightness 0.1 brightness)
+    , ((0,       XF86.xF86XK_MonBrightnessDown), updateBrightness (-0.1) brightness)
+    , ((0,       XF86.xF86XK_Search),            X.spawn "pkill -USR1 redshift-gtk") -- Toggle the redshift daemon
+    , ((0,       XF86.xF86XK_AudioRaiseVolume),  X.spawn "amixer -qc 1 sset Master 2dB+")
+    , ((0,       XF86.xF86XK_AudioLowerVolume),  X.spawn "amixer -qc 1 sset Master 2dB-")
+    , ((0,       XF86.xF86XK_AudioMute),         X.spawn "amixer -qc 1 sset Master mute")
+    ] ++
     -- mod-[1..9] %! Switch to workspace N
     -- mod-shift-[1..9] %! Move client to workspace N
     [ ((m .|. modm, k), X.windows $ f i)
