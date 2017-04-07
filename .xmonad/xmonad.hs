@@ -59,7 +59,9 @@ xmobarStatusBar =
     Log.statusBar myXmobarCmd pp toggleStrutsKey
     where
       toggleStrutsKey X.XConfig {X.modMask = modm} = (modm, X.xK_a)
-      pp = Log.xmobarPP { Log.ppUrgent = Log.xmobarColor "yellow" "red" . Log.xmobarStrip }
+      pp = Log.xmobarPP {
+         Log.ppUrgent = Log.xmobarColor "yellow" "red" . Log.xmobarStrip,
+         Log.ppTitle = Log.xmobarColor "green" "" }
 
 myXmobarCmd = "xmobar -f " ++ myFont
 myWorkspaces = "root" : map show [1..5] ++ ["www", "mail", "steam", "irc", "music"]
