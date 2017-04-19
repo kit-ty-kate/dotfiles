@@ -13,8 +13,9 @@ Config { font     = "fixed"
                     , Run DiskU [("/", "/: <free>")] [] 10
                     , Run Battery [] 600
                     , Run Com "/bin/bash" ["-c", "~/.config/xmobar/battery.sh"] "battery-alert" 600 -- Displays nothing. Pure side-effects
+                    , Run Com "/bin/bash" ["-c", "~/.config/xmobar/trayer-padding-icon.sh"] "trayerpad" 10
                     ]
        , sepChar  = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %battery-alert% %disku% <fc=#FF0000>*</fc> %battery% <fc=#FF0000>*</fc> %thermal0% <fc=#FF0000>*</fc> %cpu% <fc=#FF0000>*</fc> %memory% <fc=#FF0000>*</fc> %theDate%"
+       , template = "%StdinReader% }{ %battery-alert% %disku% <fc=#FF0000>*</fc> %battery% <fc=#FF0000>*</fc> %thermal0% <fc=#FF0000>*</fc> %cpu% <fc=#FF0000>*</fc> %memory% <fc=#FF0000>*</fc> %theDate%%trayerpad%"
        }

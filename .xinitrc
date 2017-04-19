@@ -36,7 +36,7 @@ eval `ssh-agent`
 eval `dbus-launch --sh-syntax --exit-with-session`
 
 # Notification tool
-trayer --edge top --align center --SetDockType true --SetPartialStrut true --expand true --width 18 --height 17 --transparent true --tint 0x000000 &
+trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype request --height 17 --transparent true --tint 0x000000 &
 
 # Network manager
 nm-applet &
