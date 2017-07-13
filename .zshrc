@@ -50,6 +50,9 @@ alias emacsx="emacsclient"
 alias ls="ls --color"
 alias grep='grep --color=auto'
 alias pcat='pygmentize'
+alias rm='rm -i'
+alias mv='mv -i'
+alias cp='cp -i'
 
 # Functions
 function mkdircd {
@@ -105,7 +108,16 @@ parse_git_state() {
     fi
 }
 
+egit() {
+    if [ "$ZSH_GIT" = 1 ]; then
+        unset ZSH_GIT
+    else
+        export ZSH_GIT=1
+    fi
+}
+
 git_prompt_string() {
+    if [ -z $ZSH_GIT ]; then; return; fi
     local git_where="$(parse_git_branch)"
     [ -n "$git_where" ] && echo "$GIT_PROMPT_SYMBOL$(parse_git_state)$GIT_PROMPT_PREFIX%{$fg[yellow]%}${git_where#(refs/heads/|tags/)}$GIT_PROMPT_SUFFIX"
 }
@@ -134,7 +146,6 @@ key[PageDown]=${terminfo[knp]}
 [[ -n "${key[Down]}"     ]]  && bindkey  "${key[Down]}"     history-search-forward
 [[ -n "${key[Home]}"     ]]  && bindkey  "${key[Home]}"     beginning-of-line
 [[ -n "${key[End]}"      ]]  && bindkey  "${key[End]}"      end-of-line
-[[ -n "${key[PageUp]}"   ]]  && bindkey  "${key[PageUp]}"   beginning-of-buffer-or-history
 [[ -n "${key[PageDown]}" ]]  && bindkey  "${key[PageDown]}" end-of-buffer-or-history
 [[ -n "${key[Insert]}"   ]]  && bindkey  "${key[Insert]}"   overwrite-mode
 [[ -n "${key[Left]}"     ]]  && bindkey  "${key[Left]}"     backward-char
@@ -155,3 +166,6 @@ source ~/.zshrc_aliases
 
 # OPAM configuration
 . ~/.opam/opam-init/init.zsh
+
+# Cargo config
+export PATH="$PATH:${HOME}/.cargo/bin"
