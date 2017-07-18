@@ -39,6 +39,7 @@ export MANPAGER=most
 export EDITOR=vim
 export SDL_AUDIODRIVER=alsa
 export TERM=xterm
+export ZSH_GIT=1
 
 # Aliases
 alias ocaml='rlwrap ocaml'
@@ -47,6 +48,7 @@ alias ll='ls -l'
 alias ne="emacsclient"
 alias emacs="emacsclient -nw"
 alias emacsx="emacsclient"
+alias killemacs='emacsclient -e "(save-buffers-kill-emacs)"'
 alias ls="ls --color"
 alias grep='grep --color=auto'
 alias pcat='pygmentize'
@@ -122,7 +124,13 @@ git_prompt_string() {
     [ -n "$git_where" ] && echo "$GIT_PROMPT_SYMBOL$(parse_git_state)$GIT_PROMPT_PREFIX%{$fg[yellow]%}${git_where#(refs/heads/|tags/)}$GIT_PROMPT_SUFFIX"
 }
 
-RPS1='$(git_prompt_string)'
+opam_prompt_string() {
+    if command -v opam > /dev/null; then
+        echo "$GIT_PROMPT_PREFIX$(opam switch show)$GIT_PROMPT_SUFFIX"
+    fi
+}
+
+RPS1='$(git_prompt_string)$(opam_prompt_string)'
 
 # Key Bindings
 bindkey -e
