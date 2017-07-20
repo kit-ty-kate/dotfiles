@@ -134,9 +134,10 @@ myKeys brightness conf@(X.XConfig {X.modMask = modm}) =
     [ ((0,       XF86.xF86XK_MonBrightnessUp),   updateBrightness 0.1 brightness)
     , ((0,       XF86.xF86XK_MonBrightnessDown), updateBrightness (-0.1) brightness)
     , ((0,       XF86.xF86XK_Search),            X.spawn "pkill -USR1 redshift-gtk") -- Toggle the redshift daemon
-    , ((0,       XF86.xF86XK_AudioRaiseVolume),  X.spawn "amixer -qc 1 sset Master 2dB+")
-    , ((0,       XF86.xF86XK_AudioLowerVolume),  X.spawn "amixer -qc 1 sset Master 2dB-")
-    , ((0,       XF86.xF86XK_AudioMute),         X.spawn "amixer -qc 1 sset Master mute")
+    , ((0,       XF86.xF86XK_AudioRaiseVolume),  X.spawn "pactl set-sink-volume @DEFAULT_SINK@ +2%")
+    , ((0,       XF86.xF86XK_AudioLowerVolume),  X.spawn "pactl set-sink-volume @DEFAULT_SINK@ -2%")
+    , ((0,       XF86.xF86XK_AudioMute),         X.spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+    , ((0,       XF86.xF86XK_AudioMicMute),      X.spawn "pactl set-source-mute @DEFAULT_SOURCE@ toggle")
     ] ++
     -- mod-[1..9] %! Switch to workspace N
     -- mod-shift-[1..9] %! Move client to workspace N
