@@ -173,7 +173,4 @@ bindkey "^[[1;5C" forward-word
 source ~/.zshrc_aliases
 
 # OPAM configuration
-. ~/.opam/opam-init/init.zsh
-
-# Cargo config
-export PATH="$PATH:${HOME}/.cargo/bin"
+source ~/.opam/opam-init/init.zsh
