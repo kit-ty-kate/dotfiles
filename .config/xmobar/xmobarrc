@@ -8,14 +8,13 @@ Config { font     = "fixed"
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run StdinReader
                     , Run ThermalZone 0 ["-t","<temp>°C"] 600
---                    , Run Volume "default" "Master" ["-t", "<volume>"] 10
---                    , Run Wireless "wlan0" [] 100
                     , Run DiskU [("/", "/: <free>")] [] 10
                     , Run Battery [] 600
                     , Run Com "/bin/bash" ["-c", "~/.config/xmobar/battery.sh"] "battery-alert" 600 -- Displays nothing. Pure side-effects
                     , Run Com "/bin/bash" ["-c", "~/.config/xmobar/trayer-padding-icon.sh"] "trayerpad" 10
+                    , Run Com "/bin/bash" ["-c", "~/.config/xmobar/pavolume.sh"] "volume" 10
                     ]
        , sepChar  = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{ %battery-alert% %disku% <fc=#FF0000>*</fc> %battery% <fc=#FF0000>*</fc> %thermal0% <fc=#FF0000>*</fc> %cpu% <fc=#FF0000>*</fc> %memory% <fc=#FF0000>*</fc> %theDate%%trayerpad%"
+       , template = "%StdinReader% }{ %battery-alert% %disku% <fc=#FF0000>*</fc> %battery% <fc=#FF0000>*</fc> %thermal0% <fc=#FF0000>*</fc> %cpu% <fc=#FF0000>*</fc> %memory% <fc=#FF0000>*</fc> %volume% <fc=#FF0000>*</fc> %theDate%%trayerpad%"
        }
