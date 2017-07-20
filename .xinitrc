@@ -10,7 +10,7 @@ export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/.cabal/bin"
 
 # Compositor
-#compton --backend glx --vsync opengl-swc --sw-opti --vsync-aggressive &
+compton --backend glx --vsync opengl-swc --sw-opti --vsync-aggressive &
 
 # Num. Lock:
 numlockx &
