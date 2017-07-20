@@ -29,12 +29,6 @@ setxkbmap fr bepo &
 # Background
 feh --bg-center pictures/bg.png &
 
-# ssh-agent
-eval `ssh-agent`
-
-# DBus
-eval `dbus-launch --sh-syntax --exit-with-session`
-
 # Notification tool
 trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype request --height 17 --transparent true --tint 0x000000 &
 
@@ -44,6 +38,6 @@ nm-applet &
 # Redshift
 redshift-gtk -l `head -n 1 ~/.location` &
 
-# WM:
-#exec awesome
-exec xmonad
+# WM (wrapped with dbus & ssh-agent):
+#exec dbus-launch --exit-with-session ssh-agent awesome
+exec dbus-launch --exit-with-session ssh-agent xmonad
