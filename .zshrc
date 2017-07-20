@@ -45,9 +45,9 @@ export ZSH_GIT=1
 alias ocaml='rlwrap ocaml'
 alias coqtop='rlwrap coqtop'
 alias ll='ls -l'
-alias ne="emacsclient"
-alias emacs="emacsclient -nw"
-alias emacsx="emacsclient"
+alias ne="emacsclient -a ''"
+alias emacs="emacsclient -a '' -nw"
+alias emacsx="emacsclient -a ''"
 alias killemacs='emacsclient -e "(save-buffers-kill-emacs)"'
 alias ls="ls --color"
 alias grep='grep --color=auto'

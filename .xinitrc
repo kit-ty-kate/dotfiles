@@ -44,9 +44,6 @@ nm-applet &
 # Redshift
 redshift-gtk -l `head -n 1 ~/.location` &
 
-# Emacs
-emacs --daemon &
-
 # WM:
 #exec awesome
 exec xmonad
