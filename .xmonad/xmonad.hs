@@ -67,14 +67,6 @@ myXmobarCmd = "xmobar -f " ++ myFont
 myWorkspaces = "root" : map show [1..5] ++ ["www", "mail", "steam", "irc", "music"]
 myTerminal = "gnome-terminal"
 myFont = "fixed"
-myWorkspaceWindows =
-    [ ("Firefox", "www")
-    , ("Iceweasel", "www")
-    , ("Thunderbird", "mail")
-    , ("Icedove", "mail")
-    , ("Steam", "steam")
-    , ("Spotify", "music")
-    ]
 
 myXPConfig :: Prompt.XPConfig
 myXPConfig =
@@ -171,11 +163,8 @@ myColorizer =
 
 myManageHook =
     X.composeAll $
-        map (uncurry toWorkspace) myWorkspaceWindows ++
         [ ManageHelpers.isFullscreen --> ManageHelpers.doFullFloat
         , ManageHelpers.isDialog --> ManageHelpers.doCenterFloat
         ]
 
 newManageHook = myManageHook <+> X.manageHook X.defaultConfig
-
-toWorkspace name workspace = X.className =? name --> X.doF (W.shift workspace)
