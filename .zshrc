@@ -124,9 +124,15 @@ git_prompt_string() {
     [ -n "$git_where" ] && echo "$GIT_PROMPT_SYMBOL$(parse_git_state)$GIT_PROMPT_PREFIX%{$fg[yellow]%}${git_where#(refs/heads/|tags/)}$GIT_PROMPT_SUFFIX"
 }
 
+parse_opam_state() {
+    local state="`grep switch ~/.opam/config | awk 'NB == 0 { print $2 }'`"
+    echo ${state//\"/}
+}
+
 opam_prompt_string() {
-    if command -v opam > /dev/null; then
-        echo "$GIT_PROMPT_PREFIX$(opam switch show)$GIT_PROMPT_SUFFIX"
+    if [ -d ~/.opam ]; then
+        local state=$(parse_opam_state)
+        echo "$GIT_PROMPT_PREFIX$state$GIT_PROMPT_SUFFIX"
     fi
 }
 
