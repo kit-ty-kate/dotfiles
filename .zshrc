@@ -183,4 +183,6 @@ bindkey "^[[1;5C" forward-word
 source ~/.zshrc_aliases
 
 # OPAM configuration
-source ~/.opam/opam-init/init.zsh
+if [ -n "$DISPLAY" ]; then
+    source ~/.opam/opam-init/init.zsh
+fi
