@@ -132,7 +132,11 @@ parse_opam_state() {
 opam_prompt_string() {
     if [ -d ~/.opam ]; then
         local state=$(parse_opam_state)
-        echo "$GIT_PROMPT_PREFIX$state$GIT_PROMPT_SUFFIX"
+        if [ -z "`echo $PATH | grep "$state"`" ]; then
+            echo "$GIT_PROMPT_PREFIX%{$fg[red]%}$state$GIT_PROMPT_SUFFIX"
+        else
+            echo "$GIT_PROMPT_PREFIX$state$GIT_PROMPT_SUFFIX"
+        fi
     fi
 }
 
