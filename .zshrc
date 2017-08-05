@@ -61,6 +61,11 @@ function mkdircd {
     mkdir $1 && cd $1
 }
 
+function weather {
+    local loc=${1:-`head -n 1 ~/.location | tr ':' ','`}
+    curl "wttr.in/$loc"
+}
+
 # Prompt
 autoload -U promptinit
 promptinit
