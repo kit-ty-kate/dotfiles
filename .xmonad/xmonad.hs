@@ -106,7 +106,7 @@ myKeys brightness conf@(X.XConfig {X.modMask = modm}) =
     , ((modm .|. X.shiftMask,   X.xK_Left),      PS.onNextNeighbour W.shift)
     , ((modm,                   X.xK_Down),      Empty.viewEmptyWorkspace)
     , ((modm,                   X.xK_BackSpace), Shell.shellPrompt myXPConfig)
-    , ((modm,                   X.xK_z),         X.spawn "xscreensaver-command -lock")
+    , ((modm,                   X.xK_z),         X.spawn "gnome-screensaver-command --lock")
     , ((modm,                   X.xK_space),     X.sendMessage X.NextLayout)
     , ((modm,                   X.xK_Return),    X.spawn myTerminal)
     , ((modm .|. X.shiftMask,   X.xK_Up),        GridSelect.goToSelected $ gsconfig2 myColorizer)

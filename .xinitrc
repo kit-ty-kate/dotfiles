@@ -24,7 +24,7 @@ cmd numlockx
 cmd parcellite -d
 
 # Screen lock
-cmd xscreensaver -no-splash
+cmd gnome-screensaver
 
 # Keyboard layout
 cmd setxkbmap fr bepo
