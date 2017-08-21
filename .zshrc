@@ -101,13 +101,14 @@ parse_git_state() {
     if [ -n $GIT_DIR ] && test -r $GIT_DIR/MERGE_HEAD; then
         GIT_STATE=$GIT_STATE$GIT_PROMPT_MERGING
     fi
-    if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
+    local GIT_STATUS="$(git status --short)"
+    if [[ -n $(echo "$GIT_STATUS" | grep "^??") ]]; then
         GIT_STATE=$GIT_STATE$GIT_PROMPT_UNTRACKED
     fi
-    if ! git diff --quiet 2> /dev/null; then
+    if [[ -n $(echo "$GIT_STATUS" | grep "^ M") ]]; then
         GIT_STATE=$GIT_STATE$GIT_PROMPT_MODIFIED
     fi
-    if ! git diff --cached --quiet 2> /dev/null; then
+    if [[ -n $(echo "$GIT_STATUS" | grep "^M ") ]]; then
         GIT_STATE=$GIT_STATE$GIT_PROMPT_STAGED
     fi
     if [[ -n $GIT_STATE ]]; then
