@@ -66,6 +66,10 @@ function weather {
     curl "wttr.in/$loc"
 }
 
+function play {
+    cvlc --no-xlib $@ vlc://quit
+}
+
 # Prompt
 autoload -U promptinit
 promptinit
