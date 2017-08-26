@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Exports:
 export GTK2_RC_FILES="$HOME/.gtkrc-2.0"
@@ -9,7 +9,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 export PATH="$PATH:$HOME/.cargo/bin"
 export PATH="$PATH:$HOME/.cabal/bin"
 
-function cmd() {
+cmd () {
     hash "$1" || exit 1
     $@ &
 }
