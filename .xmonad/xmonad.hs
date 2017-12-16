@@ -5,11 +5,9 @@ import qualified XMonad.Layout.Spacing as Space
 import qualified XMonad.Layout.PerWorkspace as WS
 import qualified XMonad.Layout.Grid as Grid
 import qualified XMonad.StackSet as W
-import qualified XMonad.Actions.GridSelect as GridSelect
 import qualified XMonad.Hooks.UrgencyHook as Urgency
 import qualified XMonad.Actions.FindEmptyWorkspace as Empty
 import qualified XMonad.Prompt as Prompt
-import qualified XMonad.Prompt.Ssh as Ssh
 import qualified XMonad.Prompt.Shell as Shell
 import qualified XMonad.Prompt.Window as PW
 import qualified XMonad.Actions.PhysicalScreens as PS
@@ -51,8 +49,6 @@ conf brightness =
          , X.normalBorderColor  = "#1c1c1c"
          , X.focusedBorderColor = "#cd5c5c"
          , X.focusFollowsMouse  = False
-         , X.logHook            = Fade.fadeInactiveLogHook 0xffffffff
-         , X.handleEventHook    = Ewmh.fullscreenEventHook
          }
 
 xmobarStatusBar =
@@ -64,7 +60,7 @@ xmobarStatusBar =
          Log.ppTitle = Log.xmobarColor "green" "" }
 
 myXmobarCmd = "xmobar -f " ++ myFont
-myWorkspaces = "root" : map show [1..5] ++ ["www", "mail", "steam", "irc", "music"]
+myWorkspaces = "root" : map show [1..5] ++ ["www", "mail", "media", "irc", "music"]
 myTerminal = "gnome-terminal"
 myFont = "fixed"
 
@@ -94,13 +90,11 @@ myLayout =
 newKeys brightness x = (M.fromList (myKeys brightness x))
 myKeys brightness conf@(X.XConfig {X.modMask = modm}) =
     [ ((modm,                   X.xK_c),         X.kill)
-    , ((modm,                   X.xK_s),         Ssh.sshPrompt myXPConfig)
     , ((modm,                   X.xK_f),         X.withFocused $ X.windows . W.sink)
     , ((modm .|. X.controlMask, X.xK_Right),     Cycle.shiftTo Prompt.Next Cycle.EmptyWS)
     , ((modm .|. X.controlMask, X.xK_Left),      Cycle.shiftTo Prompt.Prev Cycle.EmptyWS)
     , ((modm,                   X.xK_Right),     Cycle.moveTo Prompt.Next Cycle.NonEmptyWS)
     , ((modm,                   X.xK_Left),      Cycle.moveTo Prompt.Prev Cycle.NonEmptyWS)
-    , ((modm,                   X.xK_k),         PW.windowPromptBring myXPConfig)
     , ((modm,                   X.xK_Tab),       X.windows W.focusDown)
     , ((modm .|. X.shiftMask,   X.xK_Right),     PS.onPrevNeighbour W.shift)
     , ((modm .|. X.shiftMask,   X.xK_Left),      PS.onNextNeighbour W.shift)
@@ -109,8 +103,6 @@ myKeys brightness conf@(X.XConfig {X.modMask = modm}) =
     , ((modm,                   X.xK_z),         X.spawn "gnome-screensaver-command --lock")
     , ((modm,                   X.xK_space),     X.sendMessage X.NextLayout)
     , ((modm,                   X.xK_Return),    X.spawn myTerminal)
-    , ((modm .|. X.shiftMask,   X.xK_Up),        GridSelect.goToSelected $ gsconfig2 myColorizer)
-    , ((modm,                   X.xK_Up),        GridSelect.gridselectWorkspace gsConfig W.greedyView)
     , ((modm,                   X.xK_m),         X.windows W.shiftMaster)
     , ((modm,                   X.xK_w),         X.sendMessage RT.MirrorShrink)
     , ((modm,                   X.xK_x),         X.sendMessage RT.MirrorExpand)
@@ -138,28 +130,7 @@ myKeys brightness conf@(X.XConfig {X.modMask = modm}) =
       , (f, m) <- [(W.greedyView, 0), (W.shift, X.shiftMask)]
     ]
     where
-      gsConfig = myBuildGSConfig GridSelect.defaultGSConfig
       numBepo = [X.xK_dollar, 0x22, 0xab, 0xbb, 0x28, 0x29, 0x40, 0x2b, 0x2d, 0x2f, 0x2a]
-
-gsconfig2 = myBuildGSConfig . GridSelect.buildDefaultGSConfig
-
-myBuildGSConfig config =
-    config
-        { GridSelect.gs_cellheight = 60
-        , GridSelect.gs_cellwidth = 250
-        , GridSelect.gs_font = myFont
-        }
-
-myColorizer =
-    GridSelect.colorRangeFromClassName
-        (0xD2, 0xF0, 0x81)
-        (0x7D, 0xAB, 0x00)
-        (0x0D, 0x17, 0x1A)
-        black
-        white
-    where
-      black = minBound
-      white = maxBound
 
 myManageHook =
     X.composeAll $
