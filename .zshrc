@@ -70,6 +70,10 @@ function play {
     cvlc --no-xlib $@ vlc://quit
 }
 
+function vimpatch {
+    vim "$1" "+vertical diffpatch $2"
+}
+
 # Prompt
 autoload -U promptinit
 promptinit
