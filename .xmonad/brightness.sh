@@ -1,6 +1,6 @@
 #!/bin/bash
 
-location=`cat ~/.location`
+location=`head -n 1 ~/.location`
 values=`redshift -l "$location" -p`
 
 temp=`echo "$values" | grep "Color temperature:" | cut -f 3 -d " "`
