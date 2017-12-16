@@ -10,7 +10,7 @@ for nb in $batteries_level; do
     count="$count+1"
 done
 battery_level=`echo "($battery_level)/($count)" | bc`
-if [ -z "$is_charging" ] && [ "$battery_level" -le 15 ]
+if [ -z "$is_charging" ] && [ "$battery_level" -le 5 ]
 then
 #    sudo systemctl suspend
     notify-send 'Battery low' "Battery level is ${battery_level}% !"

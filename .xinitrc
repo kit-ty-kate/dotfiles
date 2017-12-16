@@ -21,7 +21,7 @@ cmd compton --backend glx --vsync opengl-swc --sw-opti --vsync-aggressive
 cmd numlockx
 
 # Clipboard
-cmd parcellite -d
+cmd parcellite --no-icon
 
 # Screen lock
 cmd gnome-screensaver
