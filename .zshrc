@@ -55,6 +55,7 @@ alias pcat='pygmentize'
 alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
+alias spotify-clear.sh="rm -rf ~/.cache/spotify"
 
 # Functions
 function mkdircd {
