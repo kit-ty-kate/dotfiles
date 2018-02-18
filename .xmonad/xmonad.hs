@@ -25,6 +25,13 @@ import qualified Graphics.X11.ExtraTypes.XF86 as XF86
 import qualified Data.Map as M
 import qualified Data.IORef as IORef
 import qualified System.Exit as Exit
+import qualified System.Posix.Process as Proc
+import qualified XMonad.Util.Run as Run
+
+spawn :: String -> [String] -> IO ()
+spawn exe args = do
+  X.xfork $ Proc.executeFile exe True args Nothing
+  return ()
 
 updateBrightness :: Float -> IORef.IORef Float -> X.X ()
 updateBrightness incr ref = do
@@ -35,7 +42,9 @@ updateBrightness incr ref = do
 
 main = do
     brightness <- IORef.newIORef 1.0
-    xmobarStatusBar (conf brightness) >>= X.xmonad
+    conf <- xmobarStatusBar (conf brightness)
+    spawn "nm-applet" []
+    X.xmonad conf
 
 conf brightness =
     X.defaultConfig
@@ -59,7 +68,7 @@ xmobarStatusBar =
          Log.ppUrgent = Log.xmobarColor "yellow" "red" . Log.xmobarStrip,
          Log.ppTitle = Log.xmobarColor "green" "" }
 
-myXmobarCmd = "xmobar -f " ++ myFont
+myXmobarCmd = "exec xmobar -f " ++ myFont
 myWorkspaces = "root" : map show [1..5] ++ ["www", "mail", "media", "irc", "music"]
 myTerminal = "gnome-terminal"
 myFont = "fixed"
@@ -87,6 +96,12 @@ myLayout =
       delta = 3/100
       ratio = 1/2
 
+shellPrompt c = do
+    cmds <- X.io Shell.getCommands
+    Prompt.mkXPrompt Shell.Shell c (Shell.getShellCompl cmds $ Prompt.searchPredicate c) run
+    where
+        run a = Run.unsafeSpawn $ "exec " ++ a
+
 newKeys brightness x = (M.fromList (myKeys brightness x))
 myKeys brightness conf@(X.XConfig {X.modMask = modm}) =
     [ ((modm,                   X.xK_c),         X.kill)
@@ -99,7 +114,7 @@ myKeys brightness conf@(X.XConfig {X.modMask = modm}) =
     , ((modm .|. X.shiftMask,   X.xK_Right),     PS.onPrevNeighbour W.shift)
     , ((modm .|. X.shiftMask,   X.xK_Left),      PS.onNextNeighbour W.shift)
     , ((modm,                   X.xK_Down),      Empty.viewEmptyWorkspace)
-    , ((modm,                   X.xK_BackSpace), Shell.shellPrompt myXPConfig)
+    , ((modm,                   X.xK_BackSpace), shellPrompt myXPConfig)
     , ((modm,                   X.xK_z),         X.spawn "gnome-screensaver-command --lock")
     , ((modm,                   X.xK_space),     X.sendMessage X.NextLayout)
     , ((modm,                   X.xK_Return),    X.spawn myTerminal)

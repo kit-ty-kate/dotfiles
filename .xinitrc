@@ -35,9 +35,6 @@ cmd feh --bg-center pictures/bg.png
 # Notification tool
 cmd trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype request --height 17 --transparent true --tint 0x000000
 
-# Network manager
-cmd nm-applet
-
 # Redshift
 cmd redshift-gtk -l `head -n 1 ~/.location`
 
