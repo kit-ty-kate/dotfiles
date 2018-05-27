@@ -28,7 +28,7 @@ static char * trayer_pad_xpm[] = {
 /* <w/cols>  <h/rows>  <colors>  <chars per pixel> */
 "$1 1 1 1",
 /* Colors (none: transparent) */
-". c #ffffff",
+". c none",
 /* Pixels */
 "$pixels"
 };
