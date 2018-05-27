@@ -33,7 +33,7 @@ cmd setxkbmap fr bepo
 cmd feh --bg-center pictures/bg.png
 
 # Notification tool
-cmd trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype request --height 17 --transparent true --tint 0x000000
+cmd trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --widthtype request --height 17 --transparent true --alpha 0 --tint 0x000000
 
 # Redshift
 cmd redshift-gtk -l `head -n 1 ~/.location`
