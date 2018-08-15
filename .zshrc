@@ -140,7 +140,7 @@ git_prompt_string() {
 }
 
 parse_opam_state() {
-    local state="`grep switch ~/.opam/config | awk 'NB == 0 { print $2 }'`"
+    local state="`grep "^switch:" ~/.opam/config | awk 'NB == 0 { print $2 }'`"
     echo ${state//\"/}
 }
 
