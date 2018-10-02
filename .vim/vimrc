@@ -3,6 +3,8 @@ syntax on
 set title " Show title on X
 set wildmenu " Menu has tab completion
 set noautowrite " Don't automatically write on :next
+set mouse= " No mouse
+set ttymouse= " No mouse
 
 " Window settings
 set number " Show the line on each line
