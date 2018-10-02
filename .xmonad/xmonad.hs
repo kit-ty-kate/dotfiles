@@ -23,36 +23,54 @@ import qualified XMonad.Actions.PhysicalScreens as Screens
 import qualified XMonad.Hooks.ManageHelpers as ManageHelpers
 import qualified Graphics.X11.ExtraTypes.XF86 as XF86
 import qualified Data.Map as M
-import qualified Data.IORef as IORef
 import qualified System.Exit as Exit
 import qualified System.Posix.Process as Proc
+import qualified System.Directory as Dir
 import qualified XMonad.Util.Run as Run
+import Control.Monad.STM as STM
+import Control.Concurrent as Con
+import Control.Concurrent.STM.TChan as TChan
 
 spawn :: String -> [String] -> IO ()
 spawn exe args = do
   X.xfork $ Proc.executeFile exe True args Nothing
   return ()
 
-updateBrightness :: Float -> IORef.IORef Float -> X.X ()
-updateBrightness incr ref = do
-  val <- X.io (IORef.readIORef ref)
+spawnBrightness :: FilePath -> Float -> IO ()
+spawnBrightness home val = spawn (home ++ "/.xmonad/brightness.sh") [show val]
+
+updateBrightness :: FilePath -> Float -> TChan Float -> IO ()
+updateBrightness home incr brightness = do
+  val <- atomically $ readTChan brightness
   let newVal = max 0.1 (min 1.0 (val + incr))
-  X.io (IORef.writeIORef ref newVal)
-  X.spawn $ "$HOME/.xmonad/brightness.sh " ++ show newVal
+  atomically $ writeTChan brightness newVal
+  spawnBrightness home newVal
+
+oneSecond = 1000000
+
+loopBrightness :: FilePath -> TChan Float -> IO ()
+loopBrightness home brightness = do
+  val <- atomically $ peekTChan brightness
+  spawnBrightness home val
+  threadDelay (60 * oneSecond)
+  loopBrightness home brightness
 
 main = do
-    brightness <- IORef.newIORef 1.0
-    conf <- xmobarStatusBar (conf brightness)
+    brightness <- atomically $ newTChan
+    atomically $ writeTChan brightness 1.0
+    home <- X.io $ Dir.getHomeDirectory
+    conf <- xmobarStatusBar (conf brightness home)
+    forkIO $ loopBrightness home brightness
     spawn "nm-applet" []
     X.xmonad conf
 
-conf brightness =
+conf brightness home =
     X.defaultConfig
          { X.modMask            = X.mod4Mask
          , X.layoutHook         = myLayout
          , X.workspaces         = myWorkspaces
          , X.manageHook         = newManageHook
-         , X.keys               = newKeys brightness
+         , X.keys               = newKeys brightness home
          , X.borderWidth        = 0
          , X.terminal           = myTerminal
          , X.normalBorderColor  = "#1c1c1c"
@@ -102,8 +120,8 @@ shellPrompt c = do
     where
         run a = Run.unsafeSpawn $ "exec " ++ a
 
-newKeys brightness x = (M.fromList (myKeys brightness x))
-myKeys brightness conf@(X.XConfig {X.modMask = modm}) =
+newKeys brightness home x = (M.fromList (myKeys brightness home x))
+myKeys brightness home conf@(X.XConfig {X.modMask = modm}) =
     [ ((modm,                   X.xK_c),         X.kill)
     , ((modm,                   X.xK_f),         X.withFocused $ X.windows . W.sink)
     , ((modm .|. X.controlMask, X.xK_Right),     Cycle.shiftTo Prompt.Next Cycle.EmptyWS)
@@ -130,8 +148,8 @@ myKeys brightness conf@(X.XConfig {X.modMask = modm}) =
     , ((modm .|. X.shiftMask,   X.xK_b),         Screens.onPrevNeighbour W.shift)
     , ((modm .|. X.shiftMask,   X.xK_o),         Screens.onNextNeighbour W.shift)
     ] ++
-    [ ((0,       XF86.xF86XK_MonBrightnessUp),   updateBrightness 0.1 brightness)
-    , ((0,       XF86.xF86XK_MonBrightnessDown), updateBrightness (-0.1) brightness)
+    [ ((0,       XF86.xF86XK_MonBrightnessUp),   X.io $ updateBrightness home 0.1 brightness)
+    , ((0,       XF86.xF86XK_MonBrightnessDown), X.io $ updateBrightness home (-0.1) brightness)
     , ((0,       XF86.xF86XK_Search),            X.spawn "pkill -USR1 redshift-gtk") -- Toggle the redshift daemon
     , ((0,       XF86.xF86XK_AudioRaiseVolume),  X.spawn "pactl set-sink-volume @DEFAULT_SINK@ +2%")
     , ((0,       XF86.xF86XK_AudioLowerVolume),  X.spawn "pactl set-sink-volume @DEFAULT_SINK@ -2%")
