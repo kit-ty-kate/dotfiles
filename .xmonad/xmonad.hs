@@ -36,31 +36,30 @@ spawn exe args = do
   X.xfork $ Proc.executeFile exe True args Nothing
   return ()
 
-spawnBrightness :: FilePath -> Float -> IO ()
-spawnBrightness home val = spawn (home ++ "/.xmonad/brightness.sh") [show val]
-
 updateBrightness :: FilePath -> Float -> TChan Float -> IO ()
 updateBrightness home incr brightness = do
   val <- atomically $ readTChan brightness
   let newVal = max 0.1 (min 1.0 (val + incr))
   atomically $ writeTChan brightness newVal
-  spawnBrightness home newVal
 
-oneSecond = 1000000
+zeroPointOneSecond = 100000
 
-loopBrightness :: FilePath -> TChan Float -> IO ()
-loopBrightness home brightness = do
+loopBrightness :: Float -> FilePath -> TChan Float -> IO ()
+loopBrightness oldVal home brightness = do
   val <- atomically $ peekTChan brightness
-  spawnBrightness home val
-  threadDelay (60 * oneSecond)
-  loopBrightness home brightness
+  if val /= oldVal then
+    spawn (home ++ "/.xmonad/brightness.sh") [show val]
+  else
+    return ()
+  threadDelay zeroPointOneSecond
+  loopBrightness val home brightness
 
 main = do
     brightness <- atomically $ newTChan
     atomically $ writeTChan brightness 1.0
     home <- X.io $ Dir.getHomeDirectory
     conf <- xmobarStatusBar (conf brightness home)
-    forkIO $ loopBrightness home brightness
+    forkIO $ loopBrightness 0.0 home brightness
     spawn "nm-applet" []
     X.xmonad conf
 
