@@ -64,7 +64,7 @@ main = do
     X.xmonad conf
 
 conf brightness home =
-    X.defaultConfig
+    X.def
          { X.modMask            = X.mod4Mask
          , X.layoutHook         = myLayout
          , X.workspaces         = myWorkspaces
@@ -92,7 +92,7 @@ myFont = "fixed"
 
 myXPConfig :: Prompt.XPConfig
 myXPConfig =
-    Prompt.defaultXPConfig
+    Prompt.def
         { Prompt.font        = myFont
         , Prompt.position    = Prompt.Top
         , Prompt.bgColor     = "#080808"
@@ -169,4 +169,4 @@ myManageHook =
         , ManageHelpers.isDialog --> ManageHelpers.doCenterFloat
         ]
 
-newManageHook = myManageHook <+> X.manageHook X.defaultConfig
+newManageHook = myManageHook <+> X.manageHook X.def
