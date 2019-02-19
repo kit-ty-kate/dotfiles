@@ -24,3 +24,6 @@ set backspace=indent,eol,start " Allow backspacing over indent, eol, start
 if &diff
     colorscheme evening
 endif
+
+" Disable annoying line deletion on Ctrl+arrow keys
+set term=xterm
