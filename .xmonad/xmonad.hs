@@ -57,7 +57,26 @@ main = do
     home <- X.io $ Dir.getHomeDirectory
     conf <- xmobarStatusBar (conf brightness home)
     forkIO $ loopBrightness home brightness
-    spawn "nm-applet" []
+    spawn "nm-applet" [] -- Network manager
+    spawn "compton" ["--backend","glx",
+                     "--vsync","opengl-swc",
+                     "--sw-opti",
+                     "--vsync-aggressive"] -- Compositor
+    spawn "numlockx" [] -- Num. Lock
+    spawn "parcellite" ["--no-icon"] -- Clipboard
+    spawn "gnome-screensaver" [] -- Screen lock
+    spawn "setxkbmap" ["fr","bepo"] -- Keyboard layout
+    spawn "feh" ["--bg-center","pictures/bg.png"] -- Background
+    spawn "trayer" ["--edge","top",
+                    "--align","right",
+                    "--SetDockType","true",
+                    "--SetPartialStrut","true",
+                    "--expand","true",
+                    "--widthtype","request",
+                    "--height","17",
+                    "--transparent","true",
+                    "--alpha","0",
+                    "--tint","0x000000"] -- Notification tool
     X.xmonad conf
 
 conf brightness home =
