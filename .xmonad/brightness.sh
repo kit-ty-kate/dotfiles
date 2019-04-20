@@ -6,4 +6,4 @@ values=`redshift -l "$location" -p`
 temp=`echo "$values" | grep "Color temperature:" | cut -f 3 -d " "`
 brightness=$1
 
-redshift -P -m vidmode -O "$temp" -b "$brightness"
+redshift -P -m randr -O "$temp" -b "$brightness"
