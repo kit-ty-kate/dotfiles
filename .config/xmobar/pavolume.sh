@@ -1,9 +1,9 @@
 #!/bin/bash
 
 pa="`pactl list sinks`"
-mute="`echo "$pa" | awk '/^\tMute:/ { print $2 }'`"
-left="`echo "$pa" | awk '/^\tVolume:/ { print $5 }'`"
-right="`echo "$pa" | awk '/^\tVolume:/ { print $12 }'`"
+mute="`echo "$pa" | perl -000ne 'if(/#0/){/(Mute:.*)/; print "$1\n"}' | awk '{ print $2 }'`"
+left="`echo "$pa" | perl -000ne 'if(/#0/){/(Volume:.*)/; print "$1\n"}' | awk '{ print $5 }'`"
+right="`echo "$pa" | perl -000ne 'if(/#0/){/(Volume:.*)/; print "$1\n"}' | awk '{ print $12 }'`"
 
 if [ "$mute" = "yes" ]; then
     echo "Vol: mute"
