@@ -42,7 +42,6 @@ export TERM=xterm
 export ZSH_GIT=1
 
 # Aliases
-alias ocaml='rlwrap ocaml'
 alias coqtop='rlwrap coqtop'
 alias ll='ls -l'
 alias ne="emacsclient -a ''"
