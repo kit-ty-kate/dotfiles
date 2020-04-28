@@ -55,6 +55,7 @@ alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
 alias chloc='vim ~/.location && sudo vim /etc/apt/sources.list && sudo dpkg-reconfigure tzdata'
+alias cal='ncal -Mb'
 
 # Functions
 function mkdircd {
