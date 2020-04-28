@@ -59,16 +59,10 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
-;; OPAM
-(setq opam-share
-      (substring
-       (shell-command-to-string "opam config var share")
-       0 -1))
-
 ;; Extended files
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
-(add-to-list 'load-path (format "%s/emacs/site-lisp/" opam-share))
-(add-to-list 'load-path (format "%s/emacs/site-lisp/patoline" opam-share))
+(add-to-list 'load-path (expand-file-name "~/.opam/4.10/share/emacs/site-lisp/"))
+(add-to-list 'load-path (expand-file-name "~/.opam/4.10/emacs/site-lisp/patoline"))
 
 ;; Evil
 (setq evil-toggle-key "C-u")
@@ -103,7 +97,7 @@
 (add-hook 'tuareg-mode-hook 'merlin-mode t)
 (add-hook 'caml-mode-hook 'merlin-mode t)
 (setq merlin-use-auto-complete-mode 'easy)
-(setq merlin-command 'opam)
+(setq merlin-command (expand-file-name "~/.opam/4.10/bin/ocamlmerlin"))
 (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
 
 (defun evil-custom-merlin-iedit ()
