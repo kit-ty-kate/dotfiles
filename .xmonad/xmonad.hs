@@ -27,6 +27,7 @@ import qualified System.Exit as Exit
 import qualified System.Posix.Process as Proc
 import qualified System.Directory as Dir
 import qualified XMonad.Util.Run as Run
+import qualified XMonad.Hooks.EwmhDesktops as Ewmh
 import Control.Monad.STM as STM
 import Control.Concurrent as Con
 import Control.Concurrent.STM.TChan as TChan
@@ -80,7 +81,7 @@ main = do
     X.xmonad conf
 
 conf brightness home =
-    X.def
+    Ewmh.ewmh $ X.def
          { X.modMask            = X.mod4Mask
          , X.layoutHook         = myLayout
          , X.workspaces         = myWorkspaces
