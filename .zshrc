@@ -34,7 +34,7 @@ zstyle ':completion:*:*:kill:*:processes' list-colors "=(#b) #([0-9]#)*=36=31"
 setopt autocd
 
 # Variables
-export LANG=en_US.UTF8
+export LANG=en_GB.UTF8
 export MANPAGER=most
 export EDITOR=vim
 export SDL_AUDIODRIVER=alsa
@@ -59,8 +59,8 @@ alias flacky-scp='rsync --progress --inplace'
 alias cal='ncal -Mb'
 
 # Functions
-function mkdircd {
-    mkdir $1 && cd $1
+function mkcd {
+    mkdir "$1" && cd "$1"
 }
 
 function weather {
@@ -74,6 +74,13 @@ function play {
 
 function vimpatch {
     vim "$1" "+vertical diffpatch $2"
+}
+
+function opam_cache {
+    local hash_fun=$(echo "$1" | cut -d= -f 1)
+    local archive_hash=$(echo "$1" | cut -d= -f 2)
+    local first_two=${archive_hash:0:2}
+    echo https://opam.ocaml.org/cache/${hash_fun}/${first_two}/${archive_hash}
 }
 
 # Prompt
@@ -198,7 +205,5 @@ bindkey "^[[1;5C" forward-word
 # Custom file
 source ~/.zshrc_aliases
 
-# OPAM configuration
-if [ -n "$DISPLAY" ]; then
-    source ~/.opam/opam-init/init.zsh
-fi
+# opam configuration
+[[ ! -r /home/kit_ty_kate/.opam/opam-init/init.zsh ]] || source /home/kit_ty_kate/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
