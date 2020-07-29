@@ -1,0 +1,144 @@
+# Setup keyboard
+input * xkb_layout "fr"
+input * xkb_variant "bepo"
+input * xkb_numlock enable
+
+# Variables
+set $mod Mod4
+set $term gnome-terminal
+set $menu ~/.config/sway/exec.sh
+set $focus ~/.config/sway/focus.sh
+set $pictures ~/pictures/
+set $screenshot_file $pictures/screenshots/scrn-$(date +"%Y-%m-%d-%H-%M-%S").png
+set $screenshot grim $screenshot_file
+set $screenclip slurp | grim -g - $screenshot_file
+set $hide_waybar killall -SIGUSR1 waybar
+
+# Wallpaper
+output * bg $pictures/bg.png center #000000
+
+# Configures the mouse
+input "1739:0:Synaptics_TM3053-003" {
+    dwt enabled
+    middle_emulation disable
+}
+
+# Drag floating windows by holding down $mod and left mouse button.
+# Resize them with right mouse button + $mod.
+floating_modifier $mod normal
+
+# Disable focus using mouse
+focus_follows_mouse no
+
+# Key bindings
+bindsym $mod+Return exec $term
+bindsym $mod+c kill
+bindsym $mod+Backspace exec $menu
+bindsym $mod+Shift+r reload
+bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+# Special keyboard features
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym XF86MonBrightnessUp exec brightnessctl set +5%
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +2%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -2%
+bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# Screenshot
+bindsym $mod+Print exec $screenshot
+bindsym $mod+Shift+Print exec $screenclip
+
+# Key bindings dealing with layout
+bindsym $mod+Tab exec $focus
+bindsym $mod+space layout toggle splitv splith tabbed
+## Make window floating & sticky
+bindsym $mod+f exec 'swaymsg floating toggle && swaymsg sticky toggle'
+bindsym $mod+Shift+f focus mode_toggle
+## Split into smaller shapes
+bindsym $mod+b split toggle
+bindsym $mod+Shift+b focus parent
+
+# Switch to workspace
+bindsym $mod+dollar workspace 0:root
+bindsym $mod+0x22 workspace 1
+bindsym $mod+0xab workspace 2
+bindsym $mod+0xbb workspace 3
+bindsym $mod+0x28 workspace 4
+bindsym $mod+0x29 workspace 5
+bindsym $mod+0x40 workspace 6:www
+bindsym $mod+0x2b workspace 7:mail
+bindsym $mod+0x2d workspace 8:media
+bindsym $mod+0x2f workspace 9:msg
+bindsym $mod+0x2a workspace 10:music
+# Move focused container to workspace
+bindsym $mod+Shift+dollar move container to workspace 0:root
+bindsym $mod+Shift+0x22 move container to workspace 1
+bindsym $mod+Shift+0xab move container to workspace 2
+bindsym $mod+Shift+0xbb move container to workspace 3
+bindsym $mod+Shift+0x28 move container to workspace 4
+bindsym $mod+Shift+0x29 move container to workspace 5
+bindsym $mod+Shift+0x40 move container to workspace 6:www
+bindsym $mod+Shift+0x2b move container to workspace 7:mail
+bindsym $mod+Shift+0x2d move container to workspace 8:media
+bindsym $mod+Shift+0x2f move container to workspace 9:msg
+bindsym $mod+Shift+0x2a move container to workspace 10:music
+# Switch to next / prev workspace
+bindsym $mod+Left workspace prev
+bindsym $mod+Right workspace next
+
+# Scratchpad
+bindsym $mod+s move container to scratchpad
+bindsym $mod+p scratchpad show
+
+# Move containers
+mode "move" {
+    bindsym Left move left
+    bindsym Down move down
+    bindsym Up move up
+    bindsym Right move right
+
+    bindsym Escape mode "default"
+}
+bindsym $mod+m mode "move"
+
+# Focus containers
+mode "focus" {
+    bindsym Left focus left
+    bindsym Down focus down
+    bindsym Up focus up
+    bindsym Right focus right
+
+    bindsym Escape mode "default"
+}
+bindsym $mod+n mode "focus"
+
+# Resize containers
+mode "resize" {
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Remove titlebar
+font pango:monospace 0
+titlebar_border_thickness 0 
+titlebar_padding 0
+
+# Waybar <3
+bar {
+    swaybar_command waybar
+}
+bindsym $mod+a exec $hide_waybar
+
+# Exec some programs:
+# Network manager
+exec exec nm-applet --indicator
+# Notifications
+exec exec mako
+# Redshift
+exec exec gammastep-indicator -l "$(cat ~/.location | head -n 1)"

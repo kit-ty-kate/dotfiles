@@ -1,0 +1,82 @@
+{
+    "layer": "bottom",
+    "height": 25,
+    "modules-left": ["sway/workspaces", "sway/mode", "sway/window"],
+    "modules-right": ["disk", "battery", "temperature", "cpu", "memory", "pulseaudio", "clock", "tray"],
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "format": "{name}"
+    },
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>",
+        "tooltip": false
+    },
+    "sway/window": {
+        "format": "     |     {}",
+        "tooltip": false
+    },
+    "disk": {
+        "interval": 10,
+        "format": "{path}: {free}",
+        "path": "/",
+        "tooltip": false
+    },
+    "battery": {
+        "interval": 600,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity}% {icon}",
+        "format-charging": "{capacity}% ",
+        "format-plugged": "{capacity}% ",
+        "format-icons": ["", "", "", "", ""],
+        "tooltip": false
+    },
+    "temperature": {
+        "interval": 600,
+        "critical-threshold": 80,
+        "format": "{temperatureC}°C {icon}",
+        "format-icons": ["", "", ""],
+        "tooltip": false
+    },
+    "cpu": {
+        "interval": 10,
+        "format": "CPU: {usage}%",
+        "tooltip": false
+    },
+    "memory": {
+        "interval": 10,
+        "format": "RAM: {}%",
+        "tooltip": false
+    },
+    "pulseaudio": {
+        "scroll-step": 0.05,
+        "format": "{volume}% {icon} {format_source}",
+        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format-bluetooth-muted": " {icon} {format_source}",
+        "format-muted": " {format_source}",
+        "format-source": "{volume}% ",
+        "format-source-muted": "",
+        "format-icons": {
+            "headphones": "",
+            "handsfree": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "on-click": "pavucontrol",
+        "tooltip": false
+    },
+    "clock": {
+        "interval": 1,
+        "format": "{:%a %b %_d %Y * %H:%M:%S}",
+        "tooltip": false
+    },
+    "tray": {
+        "spacing": 10
+    }
+}
