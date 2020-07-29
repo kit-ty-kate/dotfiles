@@ -97,7 +97,7 @@
 (add-hook 'tuareg-mode-hook 'merlin-mode t)
 (add-hook 'caml-mode-hook 'merlin-mode t)
 (setq merlin-use-auto-complete-mode 'easy)
-(setq merlin-command (expand-file-name "~/.opam/4.10/bin/ocamlmerlin"))
+(setq merlin-command (expand-file-name "~/.opam/4.11/bin/ocamlmerlin"))
 (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
 
 (defun evil-custom-merlin-iedit ()
