@@ -126,7 +126,7 @@ bindsym $mod+r mode "resize"
 
 # Remove titlebar
 font pango:monospace 0
-titlebar_border_thickness 0 
+titlebar_border_thickness 0
 titlebar_padding 0
 
 # Waybar <3
