@@ -17,13 +17,13 @@
         "tooltip": false
     },
     "disk": {
-        "interval": 10,
+        "interval": 1,
         "format": "{path}: {free}",
         "path": "/",
         "tooltip": false
     },
     "battery": {
-        "interval": 600,
+        "interval": 60,
         "states": {
             "warning": 30,
             "critical": 15
@@ -35,19 +35,19 @@
         "tooltip": false
     },
     "temperature": {
-        "interval": 600,
+        "interval": 60,
         "critical-threshold": 80,
         "format": "{temperatureC}°C {icon}",
         "format-icons": ["", "", ""],
         "tooltip": false
     },
     "cpu": {
-        "interval": 10,
+        "interval": 1,
         "format": "CPU: {usage}%",
         "tooltip": false
     },
     "memory": {
-        "interval": 10,
+        "interval": 1,
         "format": "RAM: {}%",
         "tooltip": false
     },
