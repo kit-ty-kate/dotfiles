@@ -41,6 +41,10 @@ export SDL_AUDIODRIVER=alsa
 export TERM=xterm
 export ZSH_GIT=1
 
+# Language-specific package managers configuration
+export PATH=$PATH:$HOME/.cargo/bin
+export PATH=$PATH:$HOME/.cabal/bin
+
 # Aliases
 alias coqtop='rlwrap coqtop'
 alias ll='ls -l'
@@ -206,4 +210,4 @@ bindkey "^[[1;5C" forward-word
 source ~/.zshrc_aliases
 
 # opam configuration
-[[ ! -r /home/kit_ty_kate/.opam/opam-init/init.zsh ]] || source /home/kit_ty_kate/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+[[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2> /dev/null
