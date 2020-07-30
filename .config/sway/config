@@ -30,6 +30,9 @@ floating_modifier $mod normal
 # Disable focus using mouse
 focus_follows_mouse no
 
+# Lockscreen on suspend
+exec exec swayidle -w before-sleep 'swaylock -f -c 000000'
+
 # Key bindings
 bindsym $mod+Return exec $term
 bindsym $mod+c kill
