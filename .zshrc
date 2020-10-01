@@ -37,10 +37,10 @@ zstyle ':completion:*:*:kill:*:processes' list-colors "=(#b) #([0-9]#)*=36=31"
 setopt autocd
 
 # Variables
-export LANG=en_GB.UTF8
+export LANG=en_GB.UTF-8
+export LC_ALL=en_GB.UTF-8
 export MANPAGER=most
 export EDITOR=vim
-export SDL_AUDIODRIVER=alsa
 export TERM=xterm
 export ZSH_GIT=1
 
