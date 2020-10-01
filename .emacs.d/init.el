@@ -61,8 +61,8 @@
 
 ;; Extended files
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
-(add-to-list 'load-path (expand-file-name "~/.opam/4.10/share/emacs/site-lisp/"))
-(add-to-list 'load-path (expand-file-name "~/.opam/4.10/emacs/site-lisp/patoline"))
+(add-to-list 'load-path (expand-file-name "~/.opam/default/share/emacs/site-lisp/"))
+(add-to-list 'load-path (expand-file-name "~/.opam/default/emacs/site-lisp/patoline"))
 
 ;; Evil
 (setq evil-toggle-key "C-u")
@@ -97,7 +97,7 @@
 (add-hook 'tuareg-mode-hook 'merlin-mode t)
 (add-hook 'caml-mode-hook 'merlin-mode t)
 (setq merlin-use-auto-complete-mode 'easy)
-(setq merlin-command (expand-file-name "~/.opam/4.11/bin/ocamlmerlin"))
+(setq merlin-command (expand-file-name "~/.opam/default/bin/ocamlmerlin"))
 (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
 
 (defun evil-custom-merlin-iedit ()
