@@ -24,6 +24,16 @@ inst() {
     fi
 }
 
+inst_systemd_user_service() {
+    service=$1.service
+    if systemctl --version > /dev/null; then
+        inst ".config/systemd/user/$service"
+        if ! systemctl is-enabled --user "$service" > /dev/null; then
+            systemctl enable --user "$service"
+        fi
+    fi
+}
+
 # Not used anymore
 #inst .config/vimfx/config.js
 #inst .config/vimfx/frame.js
@@ -50,4 +60,7 @@ inst .xmonad/brightness.sh
 inst .xmonad/xmonad.hs
 inst .zshrc
 inst startway.sh
+
+inst_systemd_user_service ssh-agent
+
 echo 'Done.'

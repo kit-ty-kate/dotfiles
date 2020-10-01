@@ -41,6 +41,9 @@ export SDL_AUDIODRIVER=alsa
 export TERM=xterm
 export ZSH_GIT=1
 
+# ssh-agent (setup by systemd)
+export SSH_AUTH_SOCK DEFAULT="${XDG_RUNTIME_DIR}/ssh-agent.socket"
+
 # Language-specific package managers configuration
 export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.cabal/bin
