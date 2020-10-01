@@ -17,13 +17,14 @@ set shiftwidth=4 " Intent of 4
 set tabstop=8 " Tabs of size 8 (standard)
 set backspace=indent,eol,start " Allow backspacing over indent, eol, start
 
+highlight DiffAdd cterm=none ctermfg=green ctermbg=black
+highlight DiffDelete cterm=none ctermfg=darkred ctermbg=black
+highlight DiffChange cterm=none ctermfg=none ctermbg=black
+highlight DiffText cterm=none ctermfg=black ctermbg=darkyellow
+
 " Whitespace mode (Eighty Column Rule)
 "highlight OverLength ctermbg=red ctermfg=white
 "match OverLength /\%81v.\+/
-
-if &diff
-    colorscheme evening
-endif
 
 " Disable annoying line deletion on Ctrl+arrow keys
 set term=xterm
