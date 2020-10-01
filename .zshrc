@@ -2,6 +2,9 @@
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
 SAVEHIST=50000
+HISTTIMEFORMAT="[%F %T] "
+setopt INC_APPEND_HISTORY
+setopt EXTENDED_HISTORY
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
 
