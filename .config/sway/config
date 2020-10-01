@@ -94,6 +94,10 @@ bindsym $mod+Right workspace next
 bindsym $mod+s move container to scratchpad
 bindsym $mod+p scratchpad show
 
+# Floating by default
+for_window [title="Firefox - Choose User Profile"] floating enable
+for_window [title="Close tabs\? - Mozilla Firefox"] floating enable
+
 # Move containers
 mode "move" {
     bindsym Left move left
