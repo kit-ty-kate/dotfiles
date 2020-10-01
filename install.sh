@@ -1,21 +1,21 @@
-#!/bin/bash -e
+#!/bin/sh -e
 
-function get_inode {
+get_inode() {
     stat -Lc "%i" "$1"
 }
 
-function is_installed {
+is_installed() {
     inode_src=$(get_inode "$1")
     inode_dst=$(get_inode "$2" 2> /dev/null || true)
 
     test "$inode_src" = "$inode_dst"
 }
 
-function inst {
+inst() {
     src=$(pwd)/$1
     dst=$HOME/$1
     if ! is_installed "$src" "$dst"; then
-        if [ -e "$dst" ]; then
+        if test -e "$dst"; then
             echo "'$1' already exists and is not the same file"
         else
             ln -i "$src" "$dst"
