@@ -149,3 +149,5 @@ exec exec nm-applet --indicator
 exec exec mako
 # Redshift
 exec exec gammastep-indicator -l "$(cat ~/.location | head -n 1 | cut -d' ' -f1)"
+# Copy/Paste
+exec exec wl-paste -t text --watch clipman store
