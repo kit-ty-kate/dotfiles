@@ -34,6 +34,28 @@ inst_systemd_user_service() {
     fi
 }
 
+distribution=$(grep ID= /etc/os-release | cut -d= -f2)
+
+test_inst_pkg() {
+    pkg=$1
+    if test "$distribution" = "debian"; then
+        if ! dpkg -s "$pkg" > /dev/null 2> /dev/null; then
+            echo "System package '$pkg' is not installed."
+        fi
+    else
+        echo "Could not test if '$pkg' is installed."
+    fi
+}
+
+test_inst_bin() {
+    bin=$1
+    url=$2
+    if ! which "$bin" > /dev/null; then
+        echo "'$pkg' is not installed and is not available on your system."
+        echo "Source: $url"
+    fi
+}
+
 # Not used anymore
 #inst .config/vimfx/config.js
 #inst .config/vimfx/frame.js
@@ -62,5 +84,21 @@ inst .zshrc
 inst startway.sh
 
 inst_systemd_user_service ssh-agent
+
+test_inst_pkg vim
+test_inst_pkg emacs-nox
+test_inst_pkg sway
+test_inst_pkg waybar
+test_inst_pkg xwayland
+test_inst_pkg firefox
+test_inst_pkg mako-notifier
+test_inst_pkg network-manager-gnome
+test_inst_pkg wl-clipboard
+test_inst_pkg clipman
+test_inst_pkg git
+test_inst_pkg zsh
+test_inst_pkg openssh-client
+
+test_inst_bin gammastep-indicator "https://gitlab.com/chinstrap/gammastep"
 
 echo 'Done.'
