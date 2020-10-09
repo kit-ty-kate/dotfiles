@@ -76,7 +76,6 @@ set_default_app() {
 
 inst .XCompose
 inst .config/sway/config
-inst .config/sway/exec.sh
 inst .config/sway/focus.sh
 inst .config/waybar/config
 inst .config/waybar/style.css
