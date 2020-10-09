@@ -56,6 +56,14 @@ test_inst_bin() {
     fi
 }
 
+set_default_app() {
+    action=$1
+    app=$2.desktop
+    if test "$(xdg-settings get '$action')" = "$app"; then
+        xdg-settings set "$action" "$app"
+    fi
+}
+
 # Not used anymore
 #inst .config/vimfx/config.js
 #inst .config/vimfx/frame.js
@@ -111,5 +119,7 @@ test_inst_pkg slurp
 test_inst_pkg grim
 # Redshift for wayland
 test_inst_bin gammastep-indicator "https://gitlab.com/chinstrap/gammastep"
+
+set_default_app default-web-browser firefox
 
 echo 'Done.'
