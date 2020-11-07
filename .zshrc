@@ -208,7 +208,7 @@ bindkey "^[[1;5C" forward-word
 [[ -n "${key[Delete]}"   ]]  && bindkey  "${key[Delete]}"   delete-char
 
 # Custom file
-source ~/.zshrc_aliases
+test -r ~/.zshrc_aliases && source ~/.zshrc_aliases
 
 # opam configuration
 [[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2> /dev/null
