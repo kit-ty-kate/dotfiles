@@ -52,12 +52,7 @@ export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.cabal/bin
 
 # Aliases
-alias coqtop='rlwrap coqtop'
-alias ll='ls -l'
-alias ne="emacsclient -a ''"
-alias emacs="emacsclient -a '' -nw"
-alias emacsx="emacsclient -a ''"
-alias killemacs='emacsclient -e "(save-buffers-kill-emacs)"'
+alias emacs="emacs --no-site-file --no-splash"
 alias ls="ls --color"
 alias grep='grep --color=auto'
 alias pcat='pygmentize'
