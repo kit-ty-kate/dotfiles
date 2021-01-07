@@ -145,9 +145,12 @@ bindsym $mod+a exec $hide_waybar
 # Exec some programs:
 # Network manager
 exec exec nm-applet --indicator
+# Bluetooth manager
+exec exec blueman-applet
 # Notifications
 exec exec mako
 # Redshift
-exec exec gammastep-indicator -l "$(cat ~/.location | head -n 1 | cut -d' ' -f1)"
+exec gammastep-indicator -l "$(cat ~/.location | head -n 1 | cut -d' ' -f1)"
 # Copy/Paste
-exec exec wl-paste -t text --watch clipman store
+# TODO: Bring back (kept crashing)
+#exec exec wl-paste -t text --watch clipman store
