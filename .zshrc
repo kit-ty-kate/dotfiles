@@ -41,8 +41,8 @@ export LANG=en_GB.UTF-8
 export LC_ALL=en_GB.UTF-8
 export MANPAGER=most
 export EDITOR=vim
-export TERM=xterm
 export ZSH_GIT=1
+export TERM=xterm-256color
 
 # ssh-agent (setup by systemd)
 export SSH_AUTH_SOCK_DEFAULT="${XDG_RUNTIME_DIR}/ssh-agent.socket"
@@ -52,7 +52,7 @@ export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.cabal/bin
 
 # Aliases
-alias emacs="emacs --no-site-file --no-splash"
+alias emacs="TERM=xterm emacs --no-site-file --no-splash"
 alias ls="ls --color"
 alias grep='grep --color=auto'
 alias pcat='pygmentize'
