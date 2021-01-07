@@ -88,6 +88,17 @@ function opam_cache {
     echo https://opam.ocaml.org/cache/${hash_fun}/${first_two}/${archive_hash}
 }
 
+function git_fork {
+    local username=$(echo "$1" | cut -d: -f1)
+    local branch=$(echo "$1" | cut -d: -f2)
+    local repository=$(basename "$(git rev-parse --show-toplevel)")
+    if ! (git remote | grep -q "^$username\$"); then
+        git remote add "$username" "git@github.com:$username/$repository.git"
+    fi
+    git fetch "$username" "$branch"
+    git switch -c "$branch" "$username/$branch"
+}
+
 # Prompt
 autoload -U promptinit
 promptinit
