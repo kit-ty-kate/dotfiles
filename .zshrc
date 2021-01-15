@@ -61,7 +61,7 @@ alias mv='mv -i'
 alias cp='cp -i'
 alias chloc='vim ~/.location && sudo vim /etc/apt/sources.list && sudo dpkg-reconfigure tzdata'
 alias flacky-scp='rsync --progress --inplace'
-alias cal='ncal -Mb'
+alias cal='ncal -Mbw'
 
 # Functions
 function mkcd {
@@ -97,6 +97,11 @@ function git_fork {
     fi
     git fetch "$username" "$branch"
     git switch -c "$branch" "$username/$branch"
+}
+
+function git_mine {
+    local repository=$(basename "$(git rev-parse --show-toplevel)")
+    git remote add mine "git@github.com:kit-ty-kate/$repository.git"
 }
 
 # Prompt
