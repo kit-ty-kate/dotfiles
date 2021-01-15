@@ -13,3 +13,5 @@
 	enabled = true
 [merge]
 	tool = vimdiff
+[pull]
+	ff = only
