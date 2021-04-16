@@ -96,7 +96,10 @@ function git_fork {
         git remote add "$username" "git@github.com:$username/$repository.git"
     fi
     git fetch "$username" "$branch"
-    git switch -c "$branch" "$username/$branch"
+    if ! git switch -c "$branch" "$username/$branch"; then
+      git switch "$branch"
+      git pull --ff-only "$username" "$branch"
+    fi
 }
 
 function git_mine {
