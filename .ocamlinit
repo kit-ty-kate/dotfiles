@@ -5,4 +5,5 @@ let () =
 ;;
 
 #use "topfind";;
+#thread;;
 #use "down.top";;
