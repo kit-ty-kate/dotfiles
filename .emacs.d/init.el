@@ -62,7 +62,6 @@
 ;; Extended files
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))
 (add-to-list 'load-path (expand-file-name "~/.opam/default/share/emacs/site-lisp/"))
-(add-to-list 'load-path (expand-file-name "~/.opam/default/emacs/site-lisp/patoline"))
 
 ;; Evil
 (setq evil-toggle-key "C-u")
@@ -90,21 +89,25 @@
 ;; ocp-indent
 (require 'ocp-indent)
 
-;; Merlin
+;; autocomplete
 (require 'auto-complete)
-(require 'merlin)
-(require 'merlin-iedit)
-(add-hook 'tuareg-mode-hook 'merlin-mode t)
-(add-hook 'caml-mode-hook 'merlin-mode t)
-(setq merlin-use-auto-complete-mode 'easy)
-(setq merlin-command (expand-file-name "~/.opam/default/bin/ocamlmerlin"))
 (define-key ac-mode-map (kbd "M-TAB") 'auto-complete)
 
-(defun evil-custom-merlin-iedit ()
-  (interactive)
-  (if iedit-mode (iedit-mode)
+;; Merlin
+(let ((opam-share (ignore-errors (car (process-lines "opam" "var" "share")))))
+ (when (and opam-share (file-directory-p opam-share))
+  (add-to-list 'load-path (expand-file-name "emacs/site-lisp" opam-share))
+  (require 'merlin)
+  (require 'merlin-iedit)
+  (require 'merlin-ac)
+  (add-hook 'tuareg-mode-hook #'merlin-mode)
+  (add-hook 'caml-mode-hook #'merlin-mode)
+  (defun evil-custom-merlin-iedit ()
+   (interactive)
+   (if iedit-mode (iedit-mode)
     (merlin-iedit-occurrences)))
-(define-key merlin-mode-map (kbd "M-r") 'evil-custom-merlin-iedit)
+  (define-key merlin-mode-map (kbd "M-r") 'evil-custom-merlin-iedit)
+  (setq merlin-command 'opam)))
 
 ;; Patoline
 ;(require 'patoline-mode)
