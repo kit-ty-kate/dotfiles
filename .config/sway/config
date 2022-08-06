@@ -15,13 +15,14 @@ set $screenclip slurp | grim -g - $screenshot_file
 set $hide_waybar killall -SIGUSR1 waybar
 
 # Wallpaper
-output * bg $pictures/bg.png center #000000
+output * bg $pictures/bg.jpg center #000000
+output * scale 2
 
 # Configures the mouse
-input "1739:0:Synaptics_TM3053-003" {
-    dwt enabled
-    middle_emulation disable
-}
+input * natural_scroll enabled
+input * dwt enabled
+input * middle_emulation disabled
+input * accel_profile "flat"
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
