@@ -154,3 +154,5 @@ exec gammastep-indicator -l "$(cat ~/.location | head -n 1 | cut -d' ' -f1)"
 # Copy/Paste
 # TODO: Bring back (kept crashing)
 #exec exec wl-paste -t text --watch clipman store
+
+include /etc/sway/config.d/*

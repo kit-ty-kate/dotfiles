@@ -22,7 +22,10 @@
 (require 'paren)
 (show-paren-mode)
 
+;; Packages
 (require 'package)
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
 ;; Indent style
@@ -54,10 +57,6 @@
 (defconst emacs-auto-save-dir "~/.emacs.d/auto-save/")
 (setq backup-directory-alist `((".*" . , emacs-auto-save-dir)))
 (setq auto-save-file-name-transforms `((".*", emacs-auto-save-dir)))
-
-;; Packages
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
 ;; Extended files
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp"))

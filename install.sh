@@ -1,4 +1,6 @@
-#!/bin/sh -e
+#!/bin/sh
+
+set -e
 
 get_inode() {
     stat -Lc "%i" "$1"
@@ -73,8 +75,10 @@ set_default_app() {
 #inst .config/xmobar/xmobarrc
 #inst .xmonad/brightness.sh
 #inst .xmonad/xmonad.hs
+#inst .XCompose
+#inst .xinitrc
+#inst startway.sh
 
-inst .XCompose
 inst .config/sway/config
 inst .config/sway/focus.sh
 inst .config/waybar/config
@@ -86,39 +90,37 @@ inst .ocamlinit
 inst .ocp/ocp-indent.conf
 inst .vim/plugin/vimspell.vim
 inst .vim/vimrc
-inst .xinitrc
 inst .zshrc
-inst startway.sh
 
 inst_systemd_user_service ssh-agent
 
 # Test for program used above
-test_inst_pkg vim
-test_inst_pkg emacs-nox
-test_inst_pkg sway
-test_inst_pkg waybar
-test_inst_pkg xwayland
-test_inst_pkg firefox
-test_inst_pkg gnome-terminal
-test_inst_pkg git
-test_inst_pkg zsh
-test_inst_pkg openssh-client
-test_inst_bin opam "git://github.com/kit-ty-kate/opam.git#opam-health-check3"
+#test_inst_pkg vim
+#test_inst_pkg emacs-nox
+#test_inst_pkg sway
+#test_inst_pkg waybar
+#test_inst_pkg xwayland
+#test_inst_pkg firefox
+#test_inst_pkg gnome-terminal
+#test_inst_pkg git
+#test_inst_pkg zsh
+#test_inst_pkg openssh-client
+#test_inst_bin opam "git://github.com/kit-ty-kate/opam.git#opam-health-check3"
 
 # mako is a notification utility for wayland
-test_inst_pkg mako-notifier
-test_inst_pkg network-manager-gnome
+#test_inst_pkg mako-notifier
+#test_inst_pkg network-manager-gnome
 # Copy/Paste handler for wayland
-test_inst_pkg wl-clipboard
-test_inst_pkg clipman
+#test_inst_pkg wl-clipboard
+#test_inst_pkg clipman
 # suckless-tools contains dmenu used in .config/sway/exec.sh
-test_inst_pkg suckless-tools
+#test_inst_pkg suckless-tools
 # slurp & grim are screenshot tools for wayland
-test_inst_pkg slurp
-test_inst_pkg grim
+#test_inst_pkg slurp
+#test_inst_pkg grim
 # Redshift for wayland
-test_inst_bin gammastep-indicator "https://gitlab.com/chinstrap/gammastep"
+#test_inst_bin gammastep-indicator "https://gitlab.com/chinstrap/gammastep"
 
-set_default_app default-web-browser firefox
+#set_default_app default-web-browser firefox
 
 echo 'Done.'

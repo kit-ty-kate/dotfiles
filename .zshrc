@@ -52,7 +52,7 @@ export PATH=$PATH:$HOME/.cargo/bin
 export PATH=$PATH:$HOME/.cabal/bin
 
 # Aliases
-alias emacs="TERM=xterm emacs --no-site-file --no-splash"
+alias emacs="emacs -nw --no-site-file --no-splash"
 alias ls="ls --color"
 alias grep='grep --color=auto'
 alias pcat='pygmentize'
@@ -61,7 +61,7 @@ alias mv='mv -i'
 alias cp='cp -i'
 alias chloc='vim ~/.location && sudo vim /etc/apt/sources.list && sudo dpkg-reconfigure tzdata'
 alias flacky-scp='rsync --progress --inplace'
-alias cal='ncal -Mbw'
+alias cal='cal -mw'
 
 # Functions
 function mkcd {
@@ -121,7 +121,14 @@ function git_pr {
     git switch -c "fix-$i" "origin/$main_branch"
     git commit -pm "$1"
     git push mine "fix-$i"
-    open "https://github.com/kit-ty-kate/$repository/pull/new/fix-$i"
+    local url="https://github.com/kit-ty-kate/$repository/pull/new/fix-$i"
+    if command -v open > /dev/null; then
+      open "$url"
+    elif command -v xdg-open > /dev/null; then
+      xdg-open "$url"
+    else
+      echo "Please open the pull request here: $url"
+    fi
 }
 
 # Prompt
