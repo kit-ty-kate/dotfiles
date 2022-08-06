@@ -8,7 +8,7 @@ set $mod Mod4
 set $term gnome-terminal
 set $menu waylaunch
 set $focus ~/.config/sway/focus.sh
-set $pictures ~/pictures/
+set $pictures ~/Pictures/
 set $screenshot_file $pictures/screenshots/scrn-$(date +"%Y-%m-%d-%H-%M-%S").png
 set $screenshot grim $screenshot_file
 set $screenclip slurp | grim -g - $screenshot_file

@@ -37,15 +37,15 @@ zstyle ':completion:*:*:kill:*:processes' list-colors "=(#b) #([0-9]#)*=36=31"
 setopt autocd
 
 # Variables
-export LANG=en_GB.UTF-8
-export LC_ALL=en_GB.UTF-8
 export MANPAGER=most
 export EDITOR=vim
 export ZSH_GIT=1
-export TERM=xterm-256color
+
+# Make Firefox pretty on Sway
+export MOZ_ENABLE_WAYLAND=1
 
 # ssh-agent (setup by systemd)
-export SSH_AUTH_SOCK_DEFAULT="${XDG_RUNTIME_DIR}/ssh-agent.socket"
+export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 
 # Language-specific package managers configuration
 export PATH=$PATH:$HOME/.cargo/bin
