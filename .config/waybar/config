@@ -29,16 +29,16 @@
             "critical": 15
         },
         "format": "{capacity}% {icon}",
-        "format-charging": "{capacity}% ",
-        "format-plugged": "{capacity}% ",
-        "format-icons": ["", "", "", "", ""],
+        "format-charging": "{capacity}% 🔌",
+        "format-plugged": "{capacity}% 🔌",
+        "format-icons": ["🪫", "💡", "🔋"],
         "tooltip": false
     },
     "temperature": {
         "interval": 60,
         "critical-threshold": 80,
         "format": "{temperatureC}°C {icon}",
-        "format-icons": ["", "", ""],
+        "format-icons": ["🥶", "😅", "🥵"],
         "tooltip": false
     },
     "cpu": {
@@ -54,19 +54,19 @@
     "pulseaudio": {
         "scroll-step": 0.05,
         "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
-        "format-bluetooth-muted": " {icon} {format_source}",
-        "format-muted": " {format_source}",
-        "format-source": "{volume}% ",
-        "format-source-muted": "",
+        "format-bluetooth": "{volume}% {icon} 🎧 {format_source}",
+        "format-bluetooth-muted": "🔇 {icon} 🎧 {format_source}",
+        "format-muted": "🔇 {format_source}",
+        "format-source": "{volume}% 🎤",
+        "format-source-muted": "🔇🎤",
         "format-icons": {
-            "headphones": "",
-            "handsfree": "",
-            "headset": "",
-            "phone": "",
-            "portable": "",
-            "car": "",
-            "default": ["", "", ""]
+            "headphones": "🎧",
+            "handsfree": "🎧",
+            "headset": "🎧",
+            "phone": "🎧",
+            "portable": "🎧",
+            "car": "🎧",
+            "default": ["🔈", "🔉", "🔊"]
         },
         "on-click": "pavucontrol",
         "tooltip": false
