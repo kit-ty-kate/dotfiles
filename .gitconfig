@@ -1,19 +1,17 @@
-[color]
-	diff = auto
-	status = auto
-	branch = auto
+# This is Git's per-user configuration file.
 [user]
 	name = Kate
 	email = kit.ty.kate@disroot.org
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
 [alias]
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci, %cr) %C(bold blue)<%an>%Creset' --abbrev-commit
-[push]
-	default = simple
-[rerere]
-	enabled = true
-[merge]
-	tool = vimdiff
-[pull]
-	ff = only
-[init]
-	defaultBranch = main
+[alias]
+	fixup = commit --fixup
+[alias]
+	squash = rebase --autosquash -i
+[alias]
+	force-push = push --force-with-lease
