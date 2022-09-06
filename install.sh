@@ -73,6 +73,7 @@ inst_modprobe_conf() {
         if test -e "$dst"; then
             echo "'$1' already exists and is not the same file"
         else
+            sudo chown root:root "$src"
             sudo ln -i "$src" "$dst"
             sudo mkinitcpio -P
             echo "'$1' installed"
