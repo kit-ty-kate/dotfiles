@@ -66,6 +66,20 @@ set_default_app() {
     fi
 }
 
+inst_modprobe_conf() {
+    src=$(pwd)/$1
+    dst=/$1
+    if ! is_installed "$src" "$dst"; then
+        if test -e "$dst"; then
+            echo "'$1' already exists and is not the same file"
+        else
+            sudo ln -i "$src" "$dst"
+            sudo mkinitcpio -P
+            echo "'$1' installed"
+        fi
+    fi
+}
+
 # Not used anymore
 #inst .config/vimfx/config.js
 #inst .config/vimfx/frame.js
@@ -93,6 +107,8 @@ inst .vim/vimrc
 inst .zshrc
 
 inst_systemd_user_service ssh-agent
+
+inst_modprobe_conf etc/modprobe.d/hid_apple.conf
 
 # Test for program used above
 #test_inst_pkg vim
