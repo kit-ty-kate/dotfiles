@@ -108,18 +108,24 @@ function git_mine {
 }
 
 function git_pr {
-    test "$#" != 1 && echo 'usage: git_pr <commit msg>' && return
+    test "$#" -lt 1 && echo 'usage: git_pr <commit msg>' && return
+    msg=$1
+    shift
 
     local main_branch=$(git ls-remote --symref origin HEAD | awk '/^ref:/ {sub(/refs\/heads\//, "", $2); print $2}')
-    local already_existing_branches=$(git branch | grep -E '^((\*?)| ) fix-[0-9]+$' | sed 's/^..//')
+    local already_existing_remote_branches=$(git branch -rl 'mine/*' | grep -E '^((\*?)| ) mine/fix-[0-9]+$' | sed 's,^..mine/,,')
+    local already_existing_local_branches=$(git branch | grep -E '^((\*?)| ) fix-[0-9]+$' | sed 's/^..//')
+    local already_existing_branches=$(echo "$already_existing_remote_branches" "$already_existing_local_branches")
     local repository=$(basename "$(git rev-parse --show-toplevel)")
     local i=0
     while echo "$already_existing_branches" | grep -q "^fix-$i\$"; do
         i=$(echo "$i + 1" | bc)
     done
     git fetch origin "$main_branch"
+    git add -p $@
+    git stash push --keep-index
     git switch -c "fix-$i" "origin/$main_branch"
-    git commit -pm "$1"
+    git commit -m "$msg"
     git push mine "fix-$i"
     local url="https://github.com/kit-ty-kate/$repository/pull/new/fix-$i"
     if command -v open > /dev/null; then
@@ -129,6 +135,7 @@ function git_pr {
     else
       echo "Please open the pull request here: $url"
     fi
+    git stash pop
 }
 
 # Prompt
