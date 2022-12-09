@@ -1,4 +1,6 @@
-#!/bin/sh -e
+#!/bin/sh
+
+set -e
 
 tree=$(mktemp)
 swaymsg -t get_tree >> "$tree"
