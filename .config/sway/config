@@ -1,7 +1,7 @@
 # Setup keyboard
-input * xkb_layout "fr"
-input * xkb_variant "bepo"
-input * xkb_numlock enable
+input type:keyboard xkb_layout "fr"
+input type:keyboard xkb_variant "bepo"
+input type:keyboard xkb_numlock enable
 
 # Variables
 set $mod Mod4
@@ -19,10 +19,10 @@ output * bg $pictures/bg.jpg center #000000
 output * scale 2
 
 # Configures the mouse
-input * natural_scroll enabled
-input * dwt enabled
-input * middle_emulation disabled
-input * accel_profile "flat"
+input type:touchpad natural_scroll enabled
+input type:touchpad dwt enabled
+input type:touchpad middle_emulation disabled
+input type:touchpad accel_profile "flat"
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
