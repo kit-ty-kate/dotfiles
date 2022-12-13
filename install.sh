@@ -99,6 +99,7 @@ inst .config/sway/focus.sh
 inst .config/waybar/config
 inst .config/waybar/style.css
 inst .config/mako/config
+inst .config/terminator/config
 inst .emacs.d/init.el
 inst .gitconfig
 inst .ocamlinit

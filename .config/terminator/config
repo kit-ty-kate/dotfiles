@@ -1,0 +1,65 @@
+[global_config]
+[keybindings]
+  new_tab = ""
+  cycle_next = ""
+  cycle_prev = ""
+  go_next = ""
+  go_prev = ""
+  go_up = ""
+  go_down = ""
+  go_left = ""
+  go_right = ""
+  rotate_cw = ""
+  rotate_ccw = ""
+  split_horiz = ""
+  split_vert = ""
+  close_term = ""
+  copy = <Alt>c
+  paste = <Alt>v
+  toggle_scrollbar = ""
+  search = <Primary><Shift>f
+  close_window = ""
+  resize_up = ""
+  resize_down = ""
+  resize_left = ""
+  resize_right = ""
+  move_tab_right = ""
+  move_tab_left = ""
+  toggle_zoom = ""
+  scaled_zoom = ""
+  next_tab = ""
+  prev_tab = ""
+  full_screen = ""
+  reset = ""
+  reset_clear = ""
+  hide_window = ""
+  group_all = ""
+  ungroup_all = ""
+  ungroup_win = ""
+  group_tab = ""
+  ungroup_tab = ""
+  new_window = <Primary><Shift>n
+  new_terminator = ""
+  insert_number = ""
+  insert_padded = ""
+  edit_window_title = ""
+  edit_tab_title = ""
+  edit_terminal_title = ""
+  layout_launcher = ""
+  help = ""
+[profiles]
+  [[default]]
+    font = Roboto Mono 10
+    show_titlebar = False
+    scrollbar_position = hidden
+    scrollback_lines = 1000000
+    use_system_font = False
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+[plugins]

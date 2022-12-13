@@ -5,7 +5,7 @@ input type:keyboard xkb_numlock enable
 
 # Variables
 set $mod Mod4
-set $term gnome-terminal
+set $term terminator
 set $menu waylaunch
 set $focus ~/.config/sway/focus.sh
 set $pictures ~/Pictures/
