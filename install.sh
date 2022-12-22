@@ -109,6 +109,7 @@ inst .vim/vimrc
 inst .zshrc
 
 inst .local/bin/upgrade_opam
+inst .local/bin/git_pr
 
 inst_systemd_user_service ssh-agent
 
