@@ -18,7 +18,7 @@ inst() {
     dst=$HOME/$1
     if ! is_installed "$src" "$dst"; then
         if test -e "$dst"; then
-            echo "'$1' already exists and is not the same file"
+            echo "[ERROR] '$1' already exists and is not the same file"
         else
             ln -i "$src" "$dst"
             echo "'$1' installed"
@@ -33,28 +33,6 @@ inst_systemd_user_service() {
         if ! systemctl is-enabled --user "$service" > /dev/null; then
             systemctl enable --user "$service"
         fi
-    fi
-}
-
-distribution=$(grep '^ID=' /etc/os-release | cut -d= -f2) || true
-
-test_inst_pkg() {
-    pkg=$1
-    if test "$distribution" = "debian"; then
-        if ! dpkg -s "$pkg" > /dev/null 2> /dev/null; then
-            echo "System package '$pkg' is not installed."
-        fi
-    else
-        echo "Could not test if '$pkg' is installed."
-    fi
-}
-
-test_inst_bin() {
-    bin=$1
-    url=$2
-    if ! which "$bin" > /dev/null; then
-        echo "'$pkg' is not installed and is not available on your system."
-        echo "Source: $url"
     fi
 }
 
@@ -79,6 +57,12 @@ inst_modprobe_conf() {
             echo "'$1' installed"
         fi
     fi
+}
+
+cmd_is_here() {
+  if ! command -v "$1" > /dev/null ; then
+    echo "[ERROR] '$1' not found."
+  fi
 }
 
 # Not used anymore
@@ -115,32 +99,24 @@ inst_systemd_user_service ssh-agent
 
 inst_modprobe_conf etc/modprobe.d/hid_apple.conf
 
-# Test for program used above
-#test_inst_pkg vim
-#test_inst_pkg emacs-nox
-#test_inst_pkg sway
-#test_inst_pkg waybar
-#test_inst_pkg xwayland
-#test_inst_pkg firefox
-#test_inst_pkg gnome-terminal
-#test_inst_pkg git
-#test_inst_pkg zsh
-#test_inst_pkg openssh-client
-#test_inst_bin opam "git://github.com/kit-ty-kate/opam.git#opam-health-check3"
-
-# mako is a notification utility for wayland
-#test_inst_pkg mako-notifier
-#test_inst_pkg network-manager-gnome
-# Copy/Paste handler for wayland
-#test_inst_pkg wl-clipboard
-#test_inst_pkg clipman
-# suckless-tools contains dmenu used in .config/sway/exec.sh
-#test_inst_pkg suckless-tools
-# slurp & grim are screenshot tools for wayland
-#test_inst_pkg slurp
-#test_inst_pkg grim
-# Redshift for wayland
-#test_inst_bin gammastep-indicator "https://gitlab.com/chinstrap/gammastep"
+cmd_is_here vim
+cmd_is_here emacs
+cmd_is_here sway
+cmd_is_here waybar
+cmd_is_here firefox
+cmd_is_here terminator
+cmd_is_here git
+cmd_is_here zsh
+cmd_is_here ssh
+cmd_is_here opam
+cmd_is_here swayidle
+cmd_is_here grim
+cmd_is_here slurp
+cmd_is_here waylaunch
+cmd_is_here mako
+cmd_is_here nm-applet
+cmd_is_here blueman-applet
+cmd_is_here gammastep-indicator
 
 #set_default_app default-web-browser firefox
 
