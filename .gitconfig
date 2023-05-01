@@ -4,9 +4,12 @@
 	branch = auto
 [user]
 	name = Kate
-	email = kit.ty.kate@disroot.org
+	email = kit-ty-kate@outlook.com
 [alias]
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci, %cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	fixup = commit --fixup
+	squash = rebase --autosquash -i
+	force-push = push --force-with-lease
 [push]
 	default = simple
 [rerere]
