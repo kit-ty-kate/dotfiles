@@ -22,7 +22,9 @@ output * scale 2
 input type:touchpad natural_scroll enabled
 input type:touchpad dwt enabled
 input type:touchpad middle_emulation disabled
-input type:touchpad accel_profile "flat"
+input type:touchpad accel_profile "adaptive"
+input type:touchpad scroll_factor 0.5
+input type:touchpad tap disabled
 
 # Drag floating windows by holding down $mod and left mouse button.
 # Resize them with right mouse button + $mod.
@@ -36,7 +38,7 @@ exec exec swayidle -w before-sleep 'swaylock -f -c 000000'
 
 # Key bindings
 bindsym $mod+Return exec $term
-bindsym $mod+c kill
+bindsym $mod+Shift+c kill
 bindsym $mod+Backspace exec $menu
 bindsym $mod+Shift+r reload
 bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
@@ -52,8 +54,8 @@ bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 bindsym XF86AudioMicMute exec pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
 # Screenshot
-bindsym $mod+Print exec $screenshot
-bindsym $mod+Shift+Print exec $screenclip
+bindsym $mod+s exec $screenshot
+bindsym $mod+Shift+s exec $screenclip
 
 # Key bindings dealing with layout
 bindsym $mod+Tab exec $focus
@@ -93,10 +95,6 @@ bindsym $mod+Shift+0x2a move container to workspace 10:music
 bindsym $mod+Left workspace prev
 bindsym $mod+Right workspace next
 
-# Scratchpad
-bindsym $mod+s move container to scratchpad
-bindsym $mod+p scratchpad show
-
 # Floating by default
 for_window [title="Firefox - Choose User Profile"] floating enable
 for_window [title="Close tabs\? - Mozilla Firefox"] floating enable
@@ -134,7 +132,7 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-# Remove titlebar
+# Remove titlebar except for floating windows
 font pango:monospace 0
 titlebar_border_thickness 0
 titlebar_padding 0
