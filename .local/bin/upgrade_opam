@@ -13,7 +13,11 @@ cd "${dir}"
 
 git clone https://github.com/ocaml/opam .
 
-make cold
+if command -v gmake > /dev/null ; then
+  gmake cold
+else
+  make cold
+fi
 
 sudo install ./opam /usr/local/bin/opam
 
