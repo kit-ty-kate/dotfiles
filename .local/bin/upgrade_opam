@@ -21,5 +21,4 @@ fi
 
 sudo install ./opam /usr/local/bin/opam
 
-# Reload the state files
-opam list > /dev/null
+opam init --reinit -ni
