@@ -23,7 +23,7 @@
         "tooltip": false
     },
     "battery": {
-        "interval": 60,
+        "interval": 1,
         "states": {
             "warning": 30,
             "critical": 15
