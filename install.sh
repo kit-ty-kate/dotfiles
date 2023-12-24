@@ -95,8 +95,7 @@ inst .zshrc
 inst .local/bin/upgrade_opam
 inst .local/bin/git_pr
 
-# Already installed on Asahi Linux (Fedora)
-#inst_systemd_user_service ssh-agent
+inst_systemd_user_service ssh-agent
 
 #inst_modprobe_conf etc/modprobe.d/hid_apple.conf
 
