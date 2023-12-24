@@ -149,11 +149,12 @@ bindsym $mod+a exec $hide_waybar
 # Network manager
 exec exec nm-applet --indicator
 # Bluetooth manager
-exec exec blueman-applet
+#exec exec blueman-applet
 # Notifications
 exec exec mako
 # Redshift
-exec gammastep-indicator -l "$(cat ~/.location | head -n 1 | cut -d' ' -f1)"
+# TODO: Bring back (slows down startup of waybar and firefox A LOT)
+#exec gammastep-indicator -l "$(cat ~/.location | head -n 1 | cut -d' ' -f1)"
 # Copy/Paste
 # TODO: Bring back (kept crashing)
 #exec exec wl-paste -t text --watch clipman store
