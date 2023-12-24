@@ -13,6 +13,7 @@ set $screenshot_file $pictures/screenshots/scrn-$(date +"%Y-%m-%d-%H-%M-%S").png
 set $screenshot grim $screenshot_file
 set $screenclip slurp | grim -g - $screenshot_file
 set $hide_waybar killall -SIGUSR1 waybar
+set $lock swaylock -f -c 000000
 
 # Wallpaper
 output * bg $pictures/bg.jpg center #000000
@@ -33,8 +34,9 @@ floating_modifier $mod normal
 # Disable focus using mouse
 focus_follows_mouse no
 
-# Lockscreen on suspend
-exec exec swayidle -w before-sleep 'swaylock -f -c 000000'
+# Lockscreen on suspend or when Mod+Shift+U
+exec exec swayidle -w before-sleep "$lock"
+bindsym $mod+Shift+u exec $lock
 
 # Key bindings
 bindsym $mod+Return exec $term
