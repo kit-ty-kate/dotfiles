@@ -67,6 +67,11 @@
 (require 'evil)
 (evil-mode 1)
 
+;; Undo-tree
+(require 'undo-tree)
+(global-undo-tree-mode)
+(evil-set-undo-system 'undo-tree)
+
 ;; Tuareg
 (load "tuareg-site-file")
 (setq auto-mode-alist
