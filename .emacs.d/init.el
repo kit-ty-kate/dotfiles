@@ -75,15 +75,15 @@
               auto-mode-alist))
 
 ;; Vala highlight
-(require 'vala-mode)
-(add-to-list 'auto-mode-alist '("\\.vala$" . vala-mode))
-(add-to-list 'auto-mode-alist '("\\.vapi$" . vala-mode))
+;(require 'vala-mode)
+;(add-to-list 'auto-mode-alist '("\\.vala$" . vala-mode))
+;(add-to-list 'auto-mode-alist '("\\.vapi$" . vala-mode))
 
 ;; Ocsigen
 (add-to-list 'auto-mode-alist '("\\.eliomi?$" . tuareg-mode))
 
 ;; Haskell
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+;(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
 ;; ocp-indent
 (require 'ocp-indent)
@@ -115,15 +115,15 @@
 ;(require 'why3)
 
 ;; Prolog
-(autoload 'prolog-mode "prolog" "Major mode for editing Prolog programs." t)
-(add-to-list 'auto-mode-alist '("\\.pl$" . prolog-mode))
+;(autoload 'prolog-mode "prolog" "Major mode for editing Prolog programs." t)
+;(add-to-list 'auto-mode-alist '("\\.pl$" . prolog-mode))
 
 ;; Proof General
-(load-file "~/programming/contrib/proofgeneral/generic/proof-site.el")
-(add-hook 'proof-mode-hook
-          '(lambda ()
-             (define-key proof-mode-map [f5] 'proof-assert-next-command-interactive)
-             (define-key proof-mode-map [f6] 'proof-undo-last-successful-command)))
+;(load-file "~/programming/contrib/proofgeneral/generic/proof-site.el")
+;(add-hook 'proof-mode-hook
+;          '(lambda ()
+;             (define-key proof-mode-map [f5] 'proof-assert-next-command-interactive)
+;             (define-key proof-mode-map [f6] 'proof-undo-last-successful-command)))
 
 ;; Ott
 ;(require 'ottmode)
@@ -132,7 +132,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(package-selected-packages (quote (vala-mode markdown-mode iedit evil auto-complete))))
+ '(package-selected-packages '(undo-tree iedit evil auto-complete)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
