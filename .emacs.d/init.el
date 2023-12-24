@@ -22,6 +22,9 @@
 (require 'paren)
 (show-paren-mode)
 
+;; Do not show the annoying "Buffer list" window
+(setq inhibit-startup-buffer-menu t)
+
 ;; Packages
 (require 'package)
 (add-to-list 'package-archives
