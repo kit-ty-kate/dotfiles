@@ -1,3 +1,5 @@
+(setq warning-minimum-level :error)
+
 (require 'cl)
 
 ;; Character encoding

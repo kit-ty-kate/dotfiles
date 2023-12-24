@@ -41,9 +41,6 @@ export MANPAGER=most
 export EDITOR=vim
 export ZSH_GIT=1
 
-# Make Firefox pretty on Sway
-export MOZ_ENABLE_WAYLAND=1
-
 # ssh-agent (setup by systemd)
 export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 

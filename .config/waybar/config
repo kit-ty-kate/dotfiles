@@ -2,7 +2,7 @@
     "layer": "bottom",
     "height": 25,
     "modules-left": ["sway/workspaces", "sway/mode", "sway/window"],
-    "modules-right": ["disk", "battery", "temperature", "cpu", "memory", "pulseaudio", "clock", "tray"],
+    "modules-right": ["disk", "disk#home", "battery", "temperature", "cpu", "memory", "pulseaudio", "clock", "tray"],
     "sway/workspaces": {
         "disable-scroll": true,
         "all-outputs": true,
@@ -20,6 +20,12 @@
         "interval": 1,
         "format": "{path}: {free}",
         "path": "/",
+        "tooltip": false
+    },
+    "disk#home": {
+        "interval": 1,
+        "format": "{path}: {free}",
+        "path": "/home",
         "tooltip": false
     },
     "battery": {
