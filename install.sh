@@ -98,7 +98,7 @@ inst .local/bin/git_pr
 # Already installed on Asahi Linux (Fedora)
 #inst_systemd_user_service ssh-agent
 
-inst_modprobe_conf etc/modprobe.d/hid_apple.conf
+#inst_modprobe_conf etc/modprobe.d/hid_apple.conf
 
 cmd_is_here vim
 cmd_is_here emacs
