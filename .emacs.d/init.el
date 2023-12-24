@@ -111,6 +111,7 @@
    (if iedit-mode (iedit-mode)
     (merlin-iedit-occurrences)))
   (define-key merlin-mode-map (kbd "M-r") 'evil-custom-merlin-iedit)
+  (setq merlin-locate-preference 'mli)
   (setq merlin-command 'opam)))
 
 ;; Patoline
