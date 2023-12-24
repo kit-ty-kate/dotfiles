@@ -9,7 +9,7 @@ setopt hist_ignore_all_dups
 setopt hist_ignore_space
 
 # Completion
-autoload -U compinit
+autoload -Uz compinit
 compinit
 zstyle ':completion:*' menu select
 setopt completealiases
@@ -47,19 +47,23 @@ export MOZ_ENABLE_WAYLAND=1
 # ssh-agent (setup by systemd)
 export SSH_AUTH_SOCK="${XDG_RUNTIME_DIR}/ssh-agent.socket"
 
+export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/.local/google-cloud-sdk/bin:$PATH
+
 # Language-specific package managers configuration
-export PATH=$PATH:$HOME/.cargo/bin
-export PATH=$PATH:$HOME/.cabal/bin
+#export PATH=$PATH:$HOME/.cargo/bin
+#export PATH=$PATH:$HOME/.cabal/bin
 
 # Aliases
 alias emacs="emacs -nw --no-site-file --no-splash"
+alias e=emacs
 alias ls="ls --color"
 alias grep='grep --color=auto'
 alias pcat='pygmentize'
 alias rm='rm -i'
 alias mv='mv -i'
 alias cp='cp -i'
-alias chloc='vim ~/.location && sudo vim /etc/apt/sources.list && sudo dpkg-reconfigure tzdata'
+#alias chloc='vim ~/.location && sudo vim /etc/apt/sources.list && sudo dpkg-reconfigure tzdata'
 alias flacky-scp='rsync --progress --inplace'
 alias cal='cal -mw'
 
@@ -229,5 +233,10 @@ bindkey "^[[1;5C" forward-word
 # Custom file
 test -r ~/.zshrc_aliases && source ~/.zshrc_aliases
 
-# opam configuration
-[[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2> /dev/null
+# BEGIN opam configuration
+# This is useful if you're using opam as it adds:
+#   - the correct directories to the PATH
+#   - auto-completion for the opam binary
+# This section can be safely removed at any time if needed.
+[[ ! -r /home/kit_ty_kate/.opam/opam-init/init.zsh ]] || source /home/kit_ty_kate/.opam/opam-init/init.zsh  > /dev/null 2> /dev/null
+# END opam configuration
