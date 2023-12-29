@@ -1,0 +1,9 @@
+[Unit]
+Description=Set the MOZ_GMP_PATH environment variable
+
+[Service]
+Type=simple
+ExecStart=/bin/sh -l -c 'systemctl --user set-environment "MOZ_GMP_PATH=${MOZ_GMP_PATH}"'
+
+[Install]
+WantedBy=sysinit.target

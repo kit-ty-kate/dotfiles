@@ -96,6 +96,7 @@ inst .local/bin/upgrade_opam
 inst .local/bin/git_pr
 
 inst_systemd_user_service ssh-agent
+inst_systemd_user_service set-moz-gmp-path
 
 #inst_modprobe_conf etc/modprobe.d/hid_apple.conf
 
