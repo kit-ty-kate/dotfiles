@@ -94,6 +94,7 @@ inst .zshrc
 
 inst .local/bin/upgrade_opam
 inst .local/bin/git_pr
+inst .local/bin/git_rebase_continue_except
 
 inst_systemd_user_service ssh-agent
 inst_systemd_user_service set-moz-gmp-path

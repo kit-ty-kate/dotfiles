@@ -1,0 +1,14 @@
+#!/bin/sh
+
+set -e
+set -o pipefail
+
+test $# -lt 1 && echo 'usage: git_rebase_continue_except FILE...' && exit 1
+
+for i in seq $# ; do
+  file=${$i}
+  git restore --source=HEAD^ -- "$file"
+  git add -- "$file"
+done
+
+git rebase --continue
