@@ -135,7 +135,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Remove titlebar except for floating windows
-font pango:monospace 0
+font pango:monospace 1
 titlebar_border_thickness 0
 titlebar_padding 0
 
