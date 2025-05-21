@@ -54,6 +54,7 @@
     show_titlebar = False
     scrollbar_position = hidden
     scrollback_lines = 1000000
+    word_chars = "-,./?%&#_~"
     use_system_font = False
 [layouts]
   [[default]]
