@@ -13,7 +13,7 @@
 [push]
 	default = simple
 [rerere]
-	enabled = true
+	enabled = false
 [merge]
 	tool = vimdiff
 [pull]
