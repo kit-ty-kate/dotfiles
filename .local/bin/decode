@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+set -u
+
+if [ $# != 2 ]; then
+  echo "usage: decode input output"
+  exit 1
+fi
+
+exec openssl enc -aes-256-cbc -pbkdf2 -salt -in "$1" -out "$2" -d

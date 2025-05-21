@@ -95,6 +95,8 @@ inst .zshrc
 inst .local/bin/upgrade_opam
 inst .local/bin/git_pr
 inst .local/bin/git_rebase_continue_except
+inst .local/bin/encode
+inst .local/bin/decode
 
 inst_systemd_user_service ssh-agent
 inst_systemd_user_service set-moz-gmp-path
@@ -119,6 +121,7 @@ cmd_is_here mako
 cmd_is_here nm-applet
 cmd_is_here blueman-applet
 cmd_is_here gammastep-indicator
+cmd_is_here openssl
 
 #set_default_app default-web-browser firefox
 
