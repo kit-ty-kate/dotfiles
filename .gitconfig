@@ -4,7 +4,7 @@
 	branch = auto
 [user]
 	name = Kate
-	email = kit-ty-kate@outlook.com
+	email = kit-ty-kate@exn.st
 [alias]
 	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ci, %cr) %C(bold blue)<%an>%Creset' --abbrev-commit
 	fixup = commit --fixup
