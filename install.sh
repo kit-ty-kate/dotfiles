@@ -47,12 +47,12 @@ set_default_app() {
 inst_modprobe_conf() {
     src=$(pwd)/$1
     dst=/$1
-    if ! is_installed "$src" "$dst"; then
+    if ! diff -q "$src" "$dst" 2> /dev/null; then
         if test -e "$dst"; then
             echo "'$1' already exists and is not the same file"
         else
-            sudo chown root:root "$src"
-            sudo ln -i "$src" "$dst"
+            sudo cp -i "$src" "$dst"
+            sudo chown root:root "$dst"
             sudo mkinitcpio -P
             echo "'$1' installed"
         fi
@@ -101,7 +101,7 @@ inst .local/bin/decode
 inst_systemd_user_service ssh-agent
 inst_systemd_user_service set-moz-gmp-path
 
-#inst_modprobe_conf etc/modprobe.d/hid_apple.conf
+inst_modprobe_conf etc/modprobe.d/hid_apple.conf
 
 cmd_is_here vim
 cmd_is_here emacs
