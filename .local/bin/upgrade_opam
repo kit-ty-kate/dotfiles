@@ -1,6 +1,9 @@
 #!/bin/sh
 
 set -e
+set -u
+# POSIX.1-2024 complient
+# shellcheck disable=SC3040
 set -o pipefail
 
 if test "$#" -gt 0 ; then
